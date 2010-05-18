@@ -1,12 +1,14 @@
 package domain.entity;
 
+import java.util.LinkedList;
+
 public class EShip {
 
 	private String ShipID;
 	private String Name;
 	private String Captain;
 	private ECargo cargo;
-	private EScheduling scheduling;
+	private LinkedList schedulings = new LinkedList();
 
 	public EShip(String ShipID, String Name, String Captain, int maxContainers) {
 		this.ShipID = ShipID;	//TODO tilføj auto
@@ -14,7 +16,6 @@ public class EShip {
 		this.Captain = Captain;
 
 		cargo = new ECargo(maxContainers, ShipID);
-		scheduling = new EScheduling();
 	}
 
 	

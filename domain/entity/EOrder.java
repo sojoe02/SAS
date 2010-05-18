@@ -7,8 +7,8 @@ package domain.entity;
 public class EOrder {
 
 	private int orderID;
-	private EHarbour startHarbour;
-	private EHarbour endHarbour;
+	private EScheduling startScheduling;
+	private EScheduling endScheduling;
 	private EShip ship;
 	private EContainer[] containers;
 	

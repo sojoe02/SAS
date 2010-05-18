@@ -12,7 +12,9 @@ public class ECustomer extends EUser {
 	private String Company;
 	private String Adress;
 
-	private Map<String, EOrder> order = new HashMap<String, EOrder>();
+	private Map<String, EOrder> waitingOrders = new HashMap<String, EOrder>();
+	private Map<String, EOrder> activeOrders = new HashMap<String, EOrder>();
+	private Map<String, EOrder> completOrders = new HashMap<String, EOrder>();
 
 	public ECustomer(String UserID, String Name, String Company, String Adress) {
 		super(UserID, Name);
