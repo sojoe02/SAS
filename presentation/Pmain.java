@@ -20,7 +20,7 @@ public class Pmain {
 	    System.out.println("");
 	    
 	    CActioner control = new CActioner();
-		ArrayList<String> test = new ArrayList<String>();
+		ArrayList<String[]> test = new ArrayList<String[]>();
 		Date d1 = new Date(2010, 5, 8);
 		Date d2 = new Date(2010, 5, 22);
 		test = control.findShipDates("Amsterdam", "Porto", d1 ,2);
@@ -28,11 +28,23 @@ public class Pmain {
 		System.out.print("size of al after additions " + test.size());
 		   System.out.println("\n");
 		System.out.print("contents of al: " +  test );
+		   System.out.println("");
+		   
+	    for (int i = 0; i < test.size(); i++) {
+		System.out.println("Order: " + i);
+		String[] ee = test.get(i);
+		for (int j = 0; j < 5; j++) {
+		    System.out.println(ee[j]);
+		    
+		}
+	    }
 
 
+//		control.placeOrder(testUser.getUserID(), 1, 1, 6,10);
+//		control.placeOrder(testUser.getUserID(), 1, 5, 12,10);
+//
 
-		control.placeOrder(testUser.getUserID(), 1, 1, 6,10);
-		control.placeOrder(testUser.getUserID(), 1, 5, 12,10);
+
 	    /*		System.out.println("Opstart:");
 	    ECargo test = new ECargo(100, "1");
 	    //	OPRETTELSE AF SAS
