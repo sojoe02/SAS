@@ -16,9 +16,9 @@ public class CActioner {
 	broker = new MBroker(sas);
     }
 
-    public ArrayList login(int userID) {
-	return broker.login(userID);
-    }
+//    public ArrayList login(int userID) {
+//	return broker.login(userID);
+//    }
 
     // findShipDates henter de skibsdatoer der overholder kundens ønsker.
     public ArrayList<String[]> findShipDates(String startDest, String endDest, Date date, int containers) throws Exception {
@@ -30,10 +30,10 @@ public class CActioner {
     }
 
     //opret order
-    public void placeOrder (int userID, int shipID, int startSID, int endSID, int containers) throws Exception {
+    public void placeOrder (int userID, int shipID, int startSID, int endSID, int containers, String content) throws Exception {
 	//opretter order i DB
 	// order i entity er under udvikling 
-	broker.placeOrder(userID, shipID, startSID, endSID, containers);
+	broker.placeOrder(userID, shipID, startSID, endSID, containers, content);
     }
 
 }

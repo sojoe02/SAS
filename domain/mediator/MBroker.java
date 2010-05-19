@@ -82,7 +82,11 @@ public class MBroker implements IAContants{
 	    availableShips.add(availableShip);
 	}
 
+	connection.getReader().closeResult(rsShips);
+
 	return availableShips;
+
+
 
 
 
@@ -97,15 +101,18 @@ public class MBroker implements IAContants{
     }
 
 
-    public void placeOrder (int userID, int shipID, int startSID, int endSID, int containers) throws SQLException{
+    public void placeOrder (int userID, int shipID, int startSID, int endSID, int containers, String content) throws SQLException{
 	//opretter order i DB
-	String sqlStmt = "INSERT INTO orders (userID, containers, startScheduling,endScheduling)"
+	String sqlStmt = "INSERT INTO orders (userID, containers, startScheduling,endScheduling,content)"
 		+ "VALUES ("
 		+ userID + ","
 		+ containers + ","
 		+ startSID + ","
-		+ endSID+ ");"
+		+ endSID + ","
+		+ "'" +content + "'" + ");"
 	;
+
+
 	connection.getWriter().updatequery(sqlStmt);
 	sqlStmt = "UPDATE Scheduling"
 		+ " SET currentContainers=currentContainers+" + containers
@@ -116,8 +123,8 @@ public class MBroker implements IAContants{
 	;
 	connection.getWriter().updatequery(sqlStmt);
 
-//INSERT INTO orders (userID, containers, startScheduling,endScheduling)
-//VALUES (1,10,1,6);
+//INSERT INTO orders (userID, containers, startScheduling,endScheduling,content)
+//VALUES (1,10,1,6,"ting");
 
 //UPDATE Scheduling
 //SET currentContainers = currentContainers+10

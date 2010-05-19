@@ -5,6 +5,7 @@ import control.CActioner;
 
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.SwingUtilities;
 
 
 /**
@@ -15,14 +16,27 @@ public class Pmain {
 
 	public static void main(String[] args) throws Exception {
 	    // create user
-	    PUser testUser = new PUser(1);
+	    final PUser user = new PUser(1);
+	    final CActioner control = new CActioner();
+
+
+
+	SwingUtilities.invokeLater(new Runnable() {
+
+	    public void run() {
+		new GuiLauncher(control, user);
+
+	    }
+	});
+
+/*
+
 	    System.out.println("UserID: " + testUser.getUserID());
 	    System.out.println("");
 	    
-	    CActioner control = new CActioner();
+
 		ArrayList<String[]> test = new ArrayList<String[]>();
 		Date d1 = new Date(2010, 5, 8);
-		Date d2 = new Date(2010, 5, 22);
 		test = control.findShipDates("Amsterdam", "Porto", d1 ,2);
 		
 		System.out.print("size of al after additions " + test.size());
@@ -40,8 +54,8 @@ public class Pmain {
 	    }
 
 
-//		control.placeOrder(testUser.getUserID(), 1, 1, 6,10);
-//		control.placeOrder(testUser.getUserID(), 1, 5, 12,10);
+		control.placeOrder(testUser.getUserID(), 1, 1, 6,10,"mats");
+		control.placeOrder(testUser.getUserID(), 1, 5, 12,10,"danner");
 //
 
 

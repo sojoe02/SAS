@@ -8,6 +8,7 @@ package presentation;
  *
  * @author Dan Vi, Stefan Skytthe, Soren V Jorgensen og Mats Larsen.
  */
+import control.CActioner;
 import presentation.mappanel.ShowMap;
 import java.awt.*;
 import javax.swing.*;
@@ -22,8 +23,14 @@ public class GuiLauncher extends JFrame {
     JFrame SASframe;
     JTabbedPane tabbed = new JTabbedPane();
 
+    private CActioner control;
+    private PUser user;
+
     // Constructor
-    public GuiLauncher() {
+    public GuiLauncher(CActioner control, PUser user) {
+	this.control = control;
+	this.user = user;
+
 
 	ImageIcon mapicon = iconHandler("Images/mapicon.png", 45, 45);
 	ImageIcon shipicon = iconHandler("Images/shipicon.png", 45, 45);
@@ -49,7 +56,7 @@ public class GuiLauncher extends JFrame {
 	specificationPanel specPanel = new specificationPanel();
 
 	mainPanel.add(specPanel);
-	mainPanel.add(new placeOrderPanel(specPanel));
+	mainPanel.add(new placeOrderPanel(specPanel, control, user));
 
 	tabbed.addTab("Lav Ordre", sasicon, mainPanel, "SAS");
 	//--------------------------------------------------------------
@@ -79,7 +86,7 @@ public class GuiLauncher extends JFrame {
 	return new ImageIcon(img.getScaledInstance(width, height, 4));
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+/*    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 	// set the look and feel
 
 
@@ -95,12 +102,13 @@ public class GuiLauncher extends JFrame {
 	    } catch (Exception e) {
 	    }
 	}
-*/	SwingUtilities.invokeLater(new Runnable() {
+*/
+/*	SwingUtilities.invokeLater(new Runnable() {
 
 	    public void run() {
 		new GuiLauncher();
 
 	    }
 	});
-    }
+    }    */
 }

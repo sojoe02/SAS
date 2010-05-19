@@ -34,7 +34,6 @@ public class specificationPanel extends JPanel{
         startDestLab = new JLabel("Start destination: ");
         endDestLab = new JLabel("Slut destination: ");
         startDateLab = new JLabel("Afgangs dato (yyyy-mm-dd) : ");
-        endDateLab = new JLabel("Ankomst dato (yyyy-mm-dd) : ");
         numLab = new JLabel("Antal container: ");
         conLab = new JLabel("Container indhold: ");
 
@@ -43,7 +42,6 @@ public class specificationPanel extends JPanel{
         startDestField = new JTextField("Odense");
         endDestField = new JTextField("Amsterdam");
         startDateField = new JTextField("2010-06-02");
-        endDateField = new JTextField("2010-07-05");
         numField = new JTextField("10");
         conField = new JTextField("Bananer");
 
@@ -56,9 +54,6 @@ public class specificationPanel extends JPanel{
 
         add(startDateLab);
         add(startDateField);
-
-        add(endDateLab);
-        add(endDateField);
 
         add(numLab);
         add(numField);
@@ -73,7 +68,7 @@ public class specificationPanel extends JPanel{
      * , indhold af ordre}
      */
     public String[] getInfo(){
-        String[] info = {startDateField.getText(), endDateField.getText(),
+        String[] info = {startDateField.getText(), 
         startDestField.getText(),endDestField.getText(), numField.getText(), 
         conField.getText()};
 

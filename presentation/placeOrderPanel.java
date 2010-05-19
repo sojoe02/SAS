@@ -11,27 +11,31 @@ import java.awt.event.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class placeOrderPanel extends JPanel {
 
-    private CActioner cactioner;
+    private CActioner control;
+    private PUser user;
+
     private specificationPanel specPanel;
     private JButton orderButton, searchButton, clearButton, useSpecButton;
     
     private JScrollPane orderPane, startDatePane, endDatePane, shipsPane;
     private JTextArea orderText, startDateText, endDateText, shipsText;
     private JRadioButton startRadio, endRadio;
-    private JTextField dateChoiceField, shipChoiceField;
+    private JTextField startDateChoiceField,endDateChoiceField, shipChoiceField;
     private String[] info;
     private String startDate, endDate, startDest, endDest, conNum, content;
-    private ArrayList<String> shipDates = new ArrayList<String>();
+    private ArrayList<String[]> shipDates = new ArrayList<String[]>();
     private DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
 
-    placeOrderPanel(specificationPanel specPanel) {
+    placeOrderPanel(specificationPanel specPanel, CActioner control, PUser user) {
 
 	//Tilføj obj referencen til Specifkations obj
 	this.specPanel = specPanel;
-
+	this.control = control;
+	this.user = user;
 
 	//Layout for PlaceOrder Panel
 	setBackground(Color.white);
@@ -122,16 +126,20 @@ public class placeOrderPanel extends JPanel {
         
         JPanel choosingDatePanel = new JPanel();
         choosingDatePanel.setBackground(Color.white);
-        choosingDatePanel.setLayout(new GridLayout(2, 1));
+        choosingDatePanel.setLayout(new GridLayout(4,1));
 
-        shipChoiceField = new JTextField("Eks: 1");
-        dateChoiceField = new JTextField("Eks: 2010-12-04");
-
+        shipChoiceField = new JTextField("");
+        startDateChoiceField = new JTextField("");
+        endDateChoiceField = new JTextField("");
 
         //oprettelse af to tekstfelter, hvori man kan indtaste den ønskede dato
         //og det ønsekde skib
-        choosingDatePanel.add(new JLabel("Indtast den ønskede dato: "));
-        choosingDatePanel.add(dateChoiceField);
+        choosingDatePanel.add(new JLabel("Indtast den ønskede starID: "));
+        choosingDatePanel.add(startDateChoiceField);
+
+        choosingDatePanel.add(new JLabel("Indtast den ønskede slutID: "));
+        choosingDatePanel.add(endDateChoiceField);
+
 
         choosingDatePanel.add(new JLabel("Indtast det ønskede skibsnummer: "));
         choosingDatePanel.add(shipChoiceField);
@@ -203,7 +211,8 @@ public class placeOrderPanel extends JPanel {
 
 
         public void actionPerformed(ActionEvent event) {
-                orderText.setText("Afgangs dato: " + dateChoiceField.getText()
+                orderText.setText("Afgangs dato: " + startDateChoiceField.getText()
+			+ "\nAnkomst dao: " +endDateChoiceField.getText()
                         + "\nSkibs ID: " + shipChoiceField.getText()
                         + "\n\nStart destination: " + startDest
                         + "\nSlut Destination: " + endDest
@@ -217,9 +226,20 @@ public class placeOrderPanel extends JPanel {
          * Laver et popup vindue, som siger at ordren er bekræftet og lavet
          */
         public void actionPerformed(ActionEvent event) {
-            System.out.println(shipChoiceField.getText());
-            System.out.println(dateChoiceField.getText());
-            JOptionPane.showMessageDialog(null, "Ordren er oprettet og registeret");
+//            System.out.println(shipChoiceField.getText());
+//            System.out.println(startDateChoiceField.getText());
+//            System.out.println(endDateChoiceField.getText());
+	    
+	    try {
+		control.placeOrder(user.getUserID(), Integer.parseInt(shipChoiceField.getText()), Integer.parseInt(startDateChoiceField.getText()),
+			Integer.parseInt(endDateChoiceField.getText()), Integer.parseInt(conNum), content);
+	    } catch (Exception e) {
+		e.getMessage();
+	    }
+
+	    System.out.println("order test");
+
+	    JOptionPane.showMessageDialog(null, "Ordren er oprettet og registeret");
    
 	}
     }
@@ -237,44 +257,31 @@ public class placeOrderPanel extends JPanel {
 	     */
 	    info = specPanel.getInfo(); //Strign array
 	    startDate = info[0];
-	    endDate = info[1];
-	    startDest = info[2];
-	    endDest = info[3];
-	    conNum = info[4];
-	    content = info[5];
+	    startDest = info[1];
+	    endDest = info[2];
+	    conNum = info[3];
+	    content = info[4];
 	    System.out.println("søgning er udført");
 
-	    //TODO tilpas den nye metode-parametre
+
             try {
-		shipDates = cactioner.findShipDates(startDest,  endDest,df.parse(startDate),
-                        df.parse(endDate), Integer.parseInt(conNum), content);
+		System.out.println(startDate);
+		System.out.println(endDest);
+		System.out.println(startDest);
+		int t = Integer.parseInt(conNum);
+		Date date = df.parse(startDate);
+		shipDates = control.findShipDates(startDest,  endDest, date, Integer.parseInt(conNum));
 	    } catch (Exception e) {
 		e.getMessage();
 	    }
 
-            shipDates.add("2010-12-04");
-            shipDates.add("2011-11-01");
-            shipDates.add("1");
 
-            shipDates.add("2020-12-30");
-            shipDates.add("2059-05-10");
-            shipDates.add("2");
-
-
-
-            //3 parametre som skal angive, start, slut og skibs ids position i
-            //arraylisten shipDates
-            int a = 0,b = 1,c = 2;
-
-            //skriver alle de søgte datoer og skibs id ud
-            while(c<shipDates.size()){
-                shipsText.append("Start datoer: " + shipDates.get(a));
-//                a=a+3;
-                shipsText.append("\nSlut datoer: " + shipDates.get(b));
-                b=b+3;
-                shipsText.append("\nSkibs ID: " + shipDates.get(c)+ "\n\n");
-                c=c+3;
-            }
+	    for (int i = 0; i < shipDates.size(); i++) {
+		String[] shipDate = shipDates.get(i);
+		    shipsText.append("Start datoer: " + shipDate[3] + "("+ shipDate[1] +")");
+		    shipsText.append("\nSlut datoer: " + shipDate[4] + "("+ shipDate[2] +")");
+		    shipsText.append("\nSkibs ID: " + shipDate[0] + "\n");
+	    }
 	}
     }
 

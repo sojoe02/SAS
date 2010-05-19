@@ -40,6 +40,7 @@ CREATE TABLE Orders (
 	containers			INT(4)			NOT NULL,
 	startScheduling			INT(4)			NOT NULL,
 	endScheduling			INT(4)			NOT NULL,
+	content				VARCHAR(30)		NOT NULL,
 	PRIMARY KEY (orderID)	
 );
 
@@ -55,12 +56,12 @@ CREATE TABLE Scheduling (
 
 
 CREATE TABLE accessControl (
-	userID				INT(4)			NOT NULL;
-	adminAccess			BOOLEAN			NOT NULL;
-	simulatorAccess			BOOLEAN			NOT NULL;
-	shipView	  		CHAR(8)			NOT NULL;
-	orderView	 		CHAR(9)			NOT NULL;
-	containerView			CHAR(13)		NOT NULL;
+	userID					INT(4)			NOT NULL,
+	adminAccess				BOOLEAN			NOT NULL,
+	simulatorAccess			BOOLEAN			NOT NULL,
+	shipView	  			VARCHAR(8)		NOT NULL,
+	orderView	 			VARCHAR(9)		NOT NULL,
+	containerView			VARCHAR(13)		NOT NULL,
 	PRIMARY KEY(userID)
 );
 
@@ -99,7 +100,7 @@ INSERT INTO accessControl VALUES
 	(1,false,false,'shipView1','ordersView1','containerView1'),
 	(2,false,false,'shipView2','ordersView2','containerView2'),
 	(3,true,true,'ship','orders','Container'),
-	(4,true,true,'ship','orders','Container'),
+	(4,true,true,'ship','orders','Container')
 ;
 
 INSERT INTO Scheduling (eventType,eventDate,harbour,shipID,currentContainers) VALUES
