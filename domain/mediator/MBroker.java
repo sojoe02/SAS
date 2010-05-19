@@ -28,6 +28,27 @@ public class MBroker implements IAContants{
 	connection = new FConnection(dbUrl, dbDriver);
     }
 
+    public ArrayList login(int userID) throws SQLException {
+	ArrayList<String[]> userInfo = new ArrayList();
+
+	//tjekke DB-connection
+	if (connection.connect(dbUrl, dbPassword, dataBaseUser) == false) {
+	    return null;
+	}
+
+	//TODO
+	String sqlStmt =
+		" SELECT userType,userID "
+		+" From Users "
+		+" WHERE userID = " + userID
+		+" ;";
+	
+	ResultSet rsUserInfo = connection.getReader().query(sqlStmt);
+	
+
+	return userInfo;
+    }
+
     public ArrayList<String[]> findShipDates(String startDest, String endDest,Date date, int containers) throws SQLException {
 	ArrayList<String[]> availableShips = new ArrayList();
 
@@ -37,7 +58,6 @@ public class MBroker implements IAContants{
 	}
 
 	   //sql kald der finder de skibe der opfylder krav
-	ResultSet rsShips;
 	String sqlStmt =
 		"SELECT d1.ShipID AS ship, d1.schedulingID AS startSID, d1.eventDate AS startDate,"
 		+" d2.schedulingID AS endSID, d2.eventDate AS endDate"
@@ -49,9 +69,7 @@ public class MBroker implements IAContants{
 		+";"
 	;
 
-	System.out.println(sqlStmt);
-
-	rsShips = connection.getReader().query(sqlStmt);
+	ResultSet rsShips = connection.getReader().query(sqlStmt);
 	//indlæser resultat i 2-dim ArrayList
 	while (rsShips.next()) {
 	    String[] availableShip = new String[5];

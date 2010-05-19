@@ -16,6 +16,9 @@ public class CActioner {
 	broker = new MBroker(sas);
     }
 
+    public ArrayList login(int userID) {
+	return broker.login(userID);
+    }
 
     // findShipDates henter de skibsdatoer der overholder kundens ønsker.
     public ArrayList<String[]> findShipDates(String startDest, String endDest, Date date, int containers) throws Exception {

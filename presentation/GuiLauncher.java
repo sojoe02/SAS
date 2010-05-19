@@ -83,7 +83,7 @@ public class GuiLauncher extends JFrame {
 	// set the look and feel
 
 
-
+/* Look and Feel for Linux
 	try {
 	    UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
 	} catch (ClassNotFoundException classNotFoundException) {
@@ -95,11 +95,7 @@ public class GuiLauncher extends JFrame {
 	    } catch (Exception e) {
 	    }
 	}
-	//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-	/*for (int i = 0; i < 80; i++) {
-	new Thread(new GpsSim2(i)).start();
-	}*/
-	SwingUtilities.invokeLater(new Runnable() {
+*/	SwingUtilities.invokeLater(new Runnable() {
 
 	    public void run() {
 		new GuiLauncher();

@@ -58,7 +58,7 @@ public class resetDB {
 
         try
         {
-            FileReader fr = new FileReader(new File("SQL/sasDB.sql"));
+            FileReader fr = new FileReader(new File("src/SQL/sasDB.sql"));
             // be sure to not have line starting with "--" or "/*" or any other non aplhabetical character
 
             BufferedReader br = new BufferedReader(fr);
