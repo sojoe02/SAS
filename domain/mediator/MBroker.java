@@ -28,8 +28,8 @@ public class MBroker implements IAContants{
 	connection = new FConnection(dbUrl, dbDriver);
     }
 
-    public ArrayList login(int userID) throws SQLException {
-	ArrayList<String[]> userInfo = new ArrayList();
+    public ArrayList<Integer> login(int userID) throws SQLException {
+	ArrayList<Integer> userInfo = new ArrayList<Integer>();
 
 	//tjekke DB-connection
 	if (connection.connect(dbUrl, dbPassword, dataBaseUser) == false) {
@@ -38,14 +38,21 @@ public class MBroker implements IAContants{
 
 	//TODO
 	String sqlStmt =
-		" SELECT userType,userID "
-		+" From Users "
-		+" WHERE userID = " + userID
-		+" ;";
+		    " SELECT userID,adminAccess,simulatorAccess"
+		    + " FROM accessControl ac1"
+		    + " WHERE userID = " + userID
+		    + " ;"
+	;
 	
 	ResultSet rsUserInfo = connection.getReader().query(sqlStmt);
-	
 
+	while (rsUserInfo.next()) {
+	    userInfo.add(rsUserInfo.getInt("userID"));
+	    userInfo.add(rsUserInfo.getInt("adminAccess"));
+	    userInfo.add(rsUserInfo.getInt("simulatorAccess"));
+	}
+
+	connection.getReader().closeResult(rsUserInfo);
 	return userInfo;
     }
 

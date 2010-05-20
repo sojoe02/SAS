@@ -20,6 +20,11 @@ public class CActioner {
 //	return broker.login(userID);
 //    }
 
+    //henter user og rettigheder
+    public ArrayList<Integer> login(int userID) throws Exception {
+	return broker.login(userID);
+    }
+
     // findShipDates henter de skibsdatoer der overholder kundens ønsker.
     public ArrayList<String[]> findShipDates(String startDest, String endDest, Date date, int containers) throws Exception {
 

@@ -1,30 +1,26 @@
 package presentation;
 
+import java.util.ArrayList;
+
 
 public class PUser {
 
     private int userID;
-    private boolean[] accesTable;
+    private boolean adminAccess;
+    private boolean simulatorAccess;
 
-    public PUser(int userID) {
-	this.userID = userID;
+    public PUser() {
+    }
+    
+    public void setAll(ArrayList<Integer> userAccess) {
+	userID = userAccess.get(0);	
     }
 
     public PUser(int UserID, boolean[] accesTable) {
 	this.userID = UserID;
-	this.accesTable = accesTable;
     }
 
     public int getUserID() {
 	return userID;
     }
-
-    public boolean[] getAccesTable() {
-	return accesTable;
-    }
-
-   public boolean getAccesPoint(int pos) {
-	return accesTable[pos];
-    }
-
 }
