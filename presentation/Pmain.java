@@ -4,15 +4,10 @@ package presentation;
 import control.CActioner;
 
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 
-/**
- *
- * @author skytthe
- */
 public class Pmain {
 
     public static void main(String[] args) throws Exception {
@@ -28,8 +23,6 @@ public class Pmain {
 	    try {
 		int userID = Integer.parseInt(dialogInput);
 		ArrayList<Integer> userAccess = control.login(userID);
-		System.out.println(userAccess);
-		System.out.println(userAccess.size());
 		if (userAccess.size() == 3) {
 		    user.setAll(userAccess);
 		    userIDAccept = false;
@@ -42,9 +35,6 @@ public class Pmain {
 		userIDAccept = true;
 	    }   
 	} while (userIDAccept);
-
-
-	    System.out.println(user.getUserID());
 
 
 	    //starter GUI

@@ -21,6 +21,17 @@ public class ESAS {
 		//TODO
 	}
 
+	// Konstruktorer for skib, havn og bruger
+	public void createShip() {
+	    //TODO
+	}
 
+	public void createUser() {
+	    //TODO
+	}
+
+	public void createHarbour() {
+	    //TODO
+	}
 	
 }
