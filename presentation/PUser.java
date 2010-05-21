@@ -11,11 +11,11 @@ public class PUser {
 
     public PUser() {
     }
-    
-    public void setAll(ArrayList<Integer> userAccess) {
-	userID = userAccess.get(0);	
-    }
 
+    public PUser(ArrayList<Integer> userAccess) {
+	userID = userAccess.get(0);
+    }
+    
     public PUser(int UserID, boolean[] accesTable) {
 	this.userID = UserID;
     }

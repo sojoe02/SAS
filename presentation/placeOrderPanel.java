@@ -237,8 +237,6 @@ public class placeOrderPanel extends JPanel {
 		e.getMessage();
 	    }
 
-	    System.out.println("order test");
-
 	    JOptionPane.showMessageDialog(null, "Ordren er oprettet og registeret");
    
 	}
@@ -265,9 +263,6 @@ public class placeOrderPanel extends JPanel {
 
 
             try {
-		System.out.println(startDate);
-		System.out.println(endDest);
-		System.out.println(startDest);
 		int t = Integer.parseInt(conNum);
 		Date date = df.parse(startDate);
 		shipDates = control.findShipDates(startDest,  endDest, date, Integer.parseInt(conNum));
