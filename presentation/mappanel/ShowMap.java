@@ -4,7 +4,6 @@
  */
 package presentation.mappanel;
 
-
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
@@ -24,9 +23,6 @@ public class ShowMap extends JComponent implements ActionListener, MouseListener
 
     //List of active ships!
     private ArrayList<Ship> ships = new ArrayList<Ship>();
-    private Map<Integer, Thread> GpsThread =
-	    new HashMap<Integer, Thread>(50);
-    private int gpsThreadIndex = 1;
     private Harbours harbour = new Harbours();
     //Thread to start the aninmator, pause and running booleans
     private BufferedImage img = null;
@@ -37,23 +33,19 @@ public class ShowMap extends JComponent implements ActionListener, MouseListener
     private double latmin;
     private double latmax;
     private ZoomHandler zoom = new ZoomHandler();
-    Timer timer;
+    private Timer timer;
     private RouteHandler route = new RouteHandler("Odense", "NewOrleans");
+    private RouteHandler route1 = new RouteHandler("CapeTown", "NewOrleans");
+    private RouteHandler route2 = new RouteHandler("CapeTown", "Odense");
 
     public ShowMap() {
-	//Setting up the mapwindow
+	setPreferredSize(new Dimension(900, 500));
+	//Setting up the mapwindow	
 	timer = new Timer(100, this);
 	//initial delay while window gets set up
 	timer.setInitialDelay(100);
-
 	timer.start();
-
 	addMouseListener(this);
-	for (int i = 0; i < 50; i++) {
-	    addShip();
-	}
-
-
 	//---------------------------------------------------------------------
 	//Initial zoom setting when loading up the map.
 	longmin = -180;
@@ -86,23 +78,30 @@ public class ShowMap extends JComponent implements ActionListener, MouseListener
     public void paintComponent(Graphics g) {
 	Graphics2D g2 = (Graphics2D) g.create();
 	mapRender(g2);
+	route.drawRoute(g, longmin, longmax, latmin,
+		latmax, getWidth(), getHeight(), Zoomflag);
+	route1.drawRoute(g, longmin, longmax, latmin,
+		latmax, getWidth(), getHeight(), Zoomflag);
+	route2.drawRoute(g, longmin, longmax, latmin,
+		latmax, getWidth(), getHeight(), Zoomflag);
 	shipRender(g2);
 	harbour.drawHarbours(g2, longmin, longmax, latmin, latmax,
 		getWidth(), getHeight());
-	route.drawRoute(g, longmin, longmax, latmin,
-		latmax, getWidth(), getHeight());
+
     }
 
     private void shipRender(Graphics g) {
+
 	int f = 1;
+
 	double sx = pxhandler.scalingX(longmin, longmax, getWidth());
 	double sy = pxhandler.scalingY(latmin, latmax, getHeight());
 
 	for (Ship ship : ships) {
 
-	    int px = pxhandler.zoomLongToPixels(MAPCONTROL.getLongditude(f),
+	    int px = pxhandler.zoomLongToPixels(MapPanelEntity.LONGDITUDE.get(ship.getShipID()),
 		    sx, longmin, longmax);
-	    int py = pxhandler.zoomLatToPixels(MAPCONTROL.getLatitude(f),
+	    int py = pxhandler.zoomLatToPixels(MapPanelEntity.LATITUDE.get(ship.getShipID()),
 		    sy, latmin, latmax);
 
 	    ship.move(py, px);
@@ -112,17 +111,26 @@ public class ShowMap extends JComponent implements ActionListener, MouseListener
 	}
     }
 
-    public void addShip() {
-	//get current gpsMap.
-	int gpsNr = MAPCONTROL.getGpsMap();
-	//add a Gps.
-	MAPCONTROL.addGps();
-	//Make the gps thread add it to a hashmap and start it.
-	Thread thread = new Thread(new GpsSim2(gpsNr));
-	GpsThread.put(gpsThreadIndex, thread);
-	GpsThread.get(gpsThreadIndex).start();
-	ships.add(new Ship(1, gpsNr));
-	gpsThreadIndex++;
+    /*
+     * Test method to see if the graphics part works.
+     */
+    /*
+    public void addShip() {clic
+    //get current gpsMap.
+    int gpsNr = MAPCONTROL.getGpsMap();
+    //add a Gps.
+    MAPCONTROL.addGps();
+    //Make the gps thread add it to a hashmap and start it.
+    Thread thread = new Thread(new GpsSim2(gpsNr));
+    GpsThread.put(gpsThreadIndex, thread);
+    GpsThread.get(gpsThreadIndex).start();
+    ships.add(new Ship(1, gpsNr));
+    gpsThreadIndex++;
+    }*/
+    public void addShip(int shipID, Color c) {
+
+	ships.add(new Ship(shipID, c));
+
     }
 
     public void removeShip(int gpsNr) {

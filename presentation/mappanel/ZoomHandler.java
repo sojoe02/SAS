@@ -18,17 +18,30 @@ import javax.imageio.ImageIO;
  */
 public class ZoomHandler {
 
-    int[] longvalues = {-140, -100, -60, -20, 20, 60, 100, 140, 180};
-    int[] longminvalues = {-180, -140, -100, -60, -20, 20, 60, 100, 140};
-    int[] latvalues = {-60, -40, -20, 0, 20, 40, 60, 80};
-    int[] latminvalues = {-80, -60, -40, -20, 0, 20, 40, 60};
-    //array for setting xy max/min values for the mappanel.
+    /*
+     * Hardcoding the arrays for zooming, looking at specific areas of the map
+     * this could be expanded to be more dynamic later.
+     */
+    private int[] longvalues = {-140, -100, -60, -20, 20, 60, 100, 140, 180};
+    private int[] longminvalues = {-180, -140, -100, -60, -20, 20, 60, 100, 140};
+    private int[] latvalues = {-60, -40, -20, 0, 20, 40, 60, 80};
+    private int[] latminvalues = {-80, -60, -40, -20, 0, 20, 40, 60};
+
+    //array for setting xy max/min values for the mappanel. this wil handle
+    //both longditude and latitude values.
     private int[] longLat = new int[4];
 
+    /*
+     * The next two methods will look through values of x and y respectively,
+     * that could be input through  mouse button press via the mouselistener
+     * interface in class showmap.
+     *
+     */
     private String lookingThroughX(int x) {
 
 	int j = 0;
 
+	//looking through the longvalues
 	for (int i : longvalues) {
 
 	    if (x <= i && x >= longminvalues[j]) {

@@ -16,17 +16,28 @@ import java.util.Scanner;
 /**
  *
  * @author Soren V Jorgensen
+ * This class wil take the routes from a DB in this case a simple .txt as there
+ * was no time for anything else, and draw a route if the map is zoomed in
+ * (to prevent cluttering the mainmap).
  */
 public class RouteHandler {
 
-    Scanner s = null;
-    PixelHandler pxhandler = new PixelHandler();
-    ArrayList<String> coordinates = new ArrayList<String>();
-    double[] longditude;
-    double[] latitude;
-    
-    int[] intLong;
-    int[] intLat;
+    private Scanner s = null;
+
+
+    //temporary array to load in the coordinates from a DB.
+    private ArrayList<String> coordinates = new ArrayList<String>();
+
+    //Arrays to hole longditude and latitude values as doubles.
+    private double[] longditude;
+    private double[] latitude;
+
+    //integer array use to draw the route
+    private int[] intLong;
+    private int[] intLat;
+    //this one also for drawing the route ad long and latitudes needs to be 
+    //converted into pixels.
+    private PixelHandler pxhandler = new PixelHandler();
 
     public RouteHandler(String dest1, String dest2) {
 	getRoute(dest1, dest2);
@@ -60,9 +71,13 @@ public class RouteHandler {
 
     }
 
+    /*
+     * This will draw the route if it's zoomed in, not optimized in the least
+     * but it works okay.
+     */
     public void drawRoute(Graphics g,
 	    double longmin, double longmax, double latmin, double latmax,
-	    int width, int height) {
+	    int width, int height, boolean zoomed) {
 	//----------------------------------------------------------------------
 	//Converting the latitude and longditude values to pixelvalues and
 	//integer, taking in acount the zoomlevel.
@@ -78,7 +93,7 @@ public class RouteHandler {
 	for (double n : longditude) {
 	    intLong[i] = pxhandler.zoomLongToPixels(n, sx, longmin, longmax);
 	    i++;
-	    System.out.println(n);
+	    //System.out.println(n);
 	}
 
 	i = 0;
@@ -86,7 +101,7 @@ public class RouteHandler {
 	for (double n : latitude) {
 	    intLat[i] = pxhandler.zoomLatToPixels(n, sy, latmin, latmax);
 	    i++;
-	    System.out.println(n);
+	    //System.out.println(n);
 	}
 	//----------------------------------------------------------------------
 
@@ -95,12 +110,13 @@ public class RouteHandler {
 	/*
 	 * Draw a line between gps coordinates.
 	 */
+	if(zoomed == true){
 	while (latitude.length > a) {
-	    g.setColor(Color.black);
+	    g.setColor(Color.white);
 	    g.drawLine(intLong[a - 1], intLat[a - 1],
 		    intLong[a], intLat[a]);
 	    a++;
-	}
+	}}
 
 
 
