@@ -31,4 +31,9 @@ public class SimulatorEntity {
 
 	DataEntity.getInstance().startShip(to, from, v, time, shipID);
     }
+
+     public Integer[][] makeLambdaArray(int maxvalue, int harbours){
+
+	return DataEntity.getInstance().makeLambdaArray(maxvalue, harbours);
+    }
 }

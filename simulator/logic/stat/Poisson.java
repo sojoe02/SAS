@@ -46,7 +46,6 @@ public class Poisson {
 	    i = generateTi();
 	    Ti.add(i);
 	}
-
 	return Ti;
     }        
 }

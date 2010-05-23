@@ -52,38 +52,6 @@ public class LambdaArrayEvent {
 	    }
 	}
 	return lambdaValues;
-    }
-
-      public Double[][] makeProbabilityArray(int x) {
-
-	Integer[][] lambdaArray = lambdaArray();
-
-	Double[][] probArray = new Double[lambdaArray.length][lambdaArray.length];
-
-	int k = 0;
-
-	for (Integer[] i : lambdaArray) {
-
-	    int l = 0;
-
-	    for (Integer j : i) {
-
-		System.out.println(j);
-
-		if (j != null) {
-		    probArray[k][l] = LogicEntity.getInstance().getProbability(x, j);
-		} else {
-		    probArray[k][l] = null;
-		}
-		l++;
-
-	    }
-	    k++;
-
-	}
-
-	return probArray;
-
-    }
+    }  
 
 }

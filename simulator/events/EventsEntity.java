@@ -7,6 +7,7 @@ package simulator.events;
 import simulator.data.DataEntity;
 import simulator.events.sailing.DestReachedEvent;
 import simulator.events.sailing.ShipStartEvent;
+import simulator.events.stat.LambdaArrayEvent;
 
 
 /**
@@ -16,6 +17,8 @@ import simulator.events.sailing.ShipStartEvent;
 public class EventsEntity {
 
      private static EventsEntity events = new EventsEntity();
+
+     LambdaArrayEvent lambdaarray;
 
     private EventsEntity(){
 
@@ -34,9 +37,11 @@ public class EventsEntity {
 	ShipStartEvent sObs = new ShipStartEvent(lat, lon, v, time, shipID, dest);
 	// Add those Observers!
 	dest.addObserver(sObs);
+    }
 
-	
-	
+    public Integer[][] makeLambdaArray(int maxvalue, int harbours){
+	lambdaarray = new LambdaArrayEvent(maxvalue, harbours);
 
+	return lambdaarray.lambdaArray();
     }
 }

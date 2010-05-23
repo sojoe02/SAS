@@ -4,21 +4,17 @@
  */
 package simulator;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
 
 /**
  *
@@ -27,26 +23,39 @@ import javax.swing.JTextField;
 public class SimulatorPanel extends JPanel {
 
     private JButton startship;
-    private JTextField speedField, timeField;
     private SimulatorEntity sim;
     private JComboBox toList, fromList, speedList, timeList;
-    private JTabbedPane tabbed = new JTabbedPane();
+
+    /*
+     * Constants and variables for use witht the shipsimulatorpanel:
+     */
     private String[] Harbours = {"Odense", "NewOrleans", "CapeTown"};
     private Integer[] integers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20};
     private String to, from;
     private int speed, time;
     private static int shipID = 110;
+    //-------------------------------------------------------------------
+    /*
+     * Constants and variables for use with the statpanel
+     */
+    private JTextArea statoutput;
+    private JButton makeLambdaArray;
+    private int lmax = 10, harbournr = 6;
+    private JScrollPane scrollPane;
+    //---------------------------------------------------------------------
 
     public SimulatorPanel() {
 
-	//fill the array with interger values for speed, and timefactor.
+	setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-	setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
+
+	//super(new GridBagLayout());
+	// first the shipsim part, they are all chooseboxes
+	//-------------------------------------------------------------
 	toList = new JComboBox(Harbours);
 	toList.addActionListener(new choosetoListener());
 	toList.setSelectedIndex(1);
-
 
 	fromList = new JComboBox(Harbours);
 	fromList.addActionListener(new choosefromListener());
@@ -61,75 +70,60 @@ public class SimulatorPanel extends JPanel {
 	timeList.addActionListener(new choosetimeListener());
 	timeList.setSelectedIndex(5);
 
-
-
 	sim = SimulatorEntity.getInstance();
 
 	startship = new JButton("launch the ship");
 	startship.addActionListener(new startshipListener());
 
- /*	speedField = new JTextField("5");
-	timeField = new JTextField("15");
-*/
-
 	JPanel shipsimPanel = new JPanel();
 	shipsimPanelHandler(shipsimPanel);
 
-	JPanel choosePanel = new JPanel();
-	choosePanelHandler(choosePanel);
+	//------------------------------------------------------------
+	//next the stat panel.
+
+
+	statoutput = new JTextArea(40, 70);
+	statoutput.setEditable(false);
+	scrollPane = new JScrollPane(statoutput);
+
+
+
+	makeLambdaArray = new JButton("Make lambda Array");
+	makeLambdaArray.addActionListener(new makeLambdaArrayListener());
+
+
+	JPanel statPanel = new JPanel();
+	statPanelHandler(statPanel);
+	statPanel.add(scrollPane, BorderLayout.CENTER);
     }
 
-    private void choosePanelHandler(JPanel choosePanel) {
+    private void statPanelHandler(JPanel statPanel) {
 
+	statPanel.add(makeLambdaArray);
 
-	//choosePanel.setLayout(new BoxLayout(shipsimPanel, BoxLayout.Y_AXIS));
-
-
-	/*
-	shipsimPanel.add(new JLabel("Til	    (feks. NewOrleans)"));
-	shipsimPanel.add(toField);
-	shipsimPanel.add(new JLabel("Fra	    (feks. Odense)"));*/
-	choosePanel.add(new JLabel("Til:"));
-	choosePanel.add(toList);
-
-	choosePanel.add(new JLabel("Fra:"));
-	choosePanel.add(fromList);
-	
-	choosePanel.add(startship);
-
-
-
-	add(choosePanel);
+	add(statPanel);
     }
 
     private void shipsimPanelHandler(JPanel shipsimPanel) {
 
 	//shipsimPanel.setLayout(new BoxLayout(shipsimPanel, BoxLayout.Y_AXIS));
-	//shipsimPanel.setLayout(new BoxLayout(shipsimPanel, BoxLayout.PAGE_AXIS));
 
-	//shipsimPanel.setPreferredSize(new Dimension(200, 300));
-	//shipsimPanel.setLayout(new GridLayout(2, 2, 30, 30));
 	shipsimPanel.add(new JLabel("Hastighed:"));
 	shipsimPanel.add(speedList);
-
 	shipsimPanel.add(new JLabel("Tidsfactor:"));
 	shipsimPanel.add(timeList);
-	
- /*
-	shipsimPanel.add(new JLabel("Hastighed	    (feks. 10)"));
-	shipsimPanel.add(speedField);
-	shipsimPanel.add(new JLabel("Tidsfactor	    (feks. 10)"));
-	shipsimPanel.add(timeField);
-*/
+	shipsimPanel.add(new JLabel("Til:"));
+	shipsimPanel.add(toList);
+	shipsimPanel.add(new JLabel("Fra:"));
+	shipsimPanel.add(fromList);
+	shipsimPanel.add(startship);
+
 	add(shipsimPanel);
     }
 
     private class startshipListener implements ActionListener {
 
 	public void actionPerformed(ActionEvent event) {
-
-	    //int speed = Integer.parseInt(speedField.getText());
-	    //int time = Integer.parseInt(timeField.getText());
 
 	    if (to == null ? from != null : !to.equals(from)) {
 		sim.startShip(to, from,
@@ -171,6 +165,33 @@ public class SimulatorPanel extends JPanel {
 	public void actionPerformed(ActionEvent event) {
 	    JComboBox cb = (JComboBox) event.getSource();
 	    time = (Integer) cb.getSelectedItem();
+
+	}
+    }
+
+    private class makeLambdaArrayListener implements ActionListener {
+
+	public void actionPerformed(ActionEvent event) {
+
+	    Integer[][] temp = sim.makeLambdaArray(harbournr, lmax);
+
+	    statoutput.append("Generating LambdaArray: \n");
+	    statoutput.append("--------------------------------------------\n");
+	    for (int i = 0; i < temp.length; i++) {
+		for (int j = 0; j < temp[i].length; j++) {
+		    //System.out.print(" " + temp[i][j]);
+		    if (temp[i][j] != null) {
+			statoutput.append("    " + temp[i][j].toString());
+		    } else {
+			statoutput.append("    X");
+		    }
+		}
+		//System.out.println("");
+		statoutput.append("\n");
+	    }
+
+	    statoutput.append("--------------------------------------------\n");
+
 
 	}
     }

@@ -32,4 +32,9 @@ public class DataEntity {
 		getroute.getLatitude(), v, time, shipID);
 
     }
+
+       public Integer[][] makeLambdaArray(int maxvalue, int harbours){
+	
+	return EventsEntity.getInstance().makeLambdaArray(maxvalue, harbours);
+    }
 }
