@@ -62,10 +62,11 @@ public class LogicEntity {
 
 
 
-    /*public ArrayList<Double> getTiArray(int t, int L) {
+    public double poissonProb(int t, int L, int k){
 
 	poisson = new Poisson(t, L);
+	
+	return poisson.poisson(k);
 
-	return poisson.getTiArray();
-    }*/
+    }
 }

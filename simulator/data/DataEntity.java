@@ -30,19 +30,23 @@ public class DataEntity {
 
 	getroute = new getRoute(to, from);
 
-
 	EventsEntity.getInstance().StartShip(getroute.getLongditude(),
 		getroute.getLatitude(), v, time, shipID);
 
     }
 
-       public Integer[][] makeLambdaArray(int maxvalue, int harbours){
-	
+    public Integer[][] makeLambdaArray(int maxvalue, int harbours) {
+
 	return events.makeLambdaArray(maxvalue, harbours);
     }
 
-       public ArrayList<Double> makeTraffic(int lambda, int t){
+    public ArrayList<Double> makeTraffic(int lambda, int t) {
 
 	return events.makeTraffic(lambda, t);
+    }
+
+    public double getPoissonProb(int t, int L, int k) {
+
+	return events.getPoissonProb(t, L, k);
     }
 }

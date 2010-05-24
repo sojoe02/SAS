@@ -4,9 +4,10 @@
  */
 package simulator;
 
-import java.awt.BorderLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -30,7 +31,8 @@ public class SimulatorPanel extends JPanel {
      * Constants and variables for use witht the shipsimulatorpanel:
      */
     private String[] Harbours = {"Odense", "NewOrleans", "CapeTown"};
-    private Integer[] integers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20};
+    private Integer[] integers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18
+	    , 20, 30, 40, 50 ,60, 70 ,80 ,90 ,100};
     private String to, from;
     private int speed, time;
     private static int shipID = 110;
@@ -39,9 +41,10 @@ public class SimulatorPanel extends JPanel {
      * Constants and variables for use with the statpanel
      */
     private JTextArea statoutput, resultoutput;
-    private JButton makeLambdaArray, makeTraffic;
+    private JComboBox kList, LList, tList, hList;
+    private JButton makeLambdaArray, makeTraffic, poisson;
     //lmax er lig antal skibe i timen!
-    private int lmax = 10, harbournr = 6, t = 1;
+    private int lmax = 10, harbournr = 6, t = 1, k = 1;
     private JScrollPane scrollPane, scrollPane2;
     private Integer[][] lambdaarray = null;
     //---------------------------------------------------------------------
@@ -83,40 +86,74 @@ public class SimulatorPanel extends JPanel {
 	//------------------------------------------------------------
 	//next the stat panel.
 
-
-	statoutput = new JTextArea(15, 70);
+	statoutput = new JTextArea(15, 80);
 	statoutput.setEditable(false);
 	scrollPane = new JScrollPane(statoutput);
 
-	resultoutput = new JTextArea(15, 70);
+	resultoutput = new JTextArea(10, 80);
 	resultoutput.setEditable(false);
 	scrollPane2 = new JScrollPane(resultoutput);
 
-
-
-	makeLambdaArray = new JButton("Make lambda Array");
+	makeLambdaArray = new JButton("Sæt traffik");
 	makeLambdaArray.addActionListener(new makeLambdaArrayListener());
 
-	makeTraffic = new JButton("Make traffic");
+	makeTraffic = new JButton("Lav Traffik");
 	makeTraffic.addActionListener(new makeTrafficListener());
 
+	poisson = new JButton("Poisson");
+	poisson.addActionListener(new makePoissonListener());
+
+	kList = new JComboBox(integers);
+	kList.addActionListener(new chooseKListener());
+	kList.setSelectedIndex(2);
+
+	hList = new JComboBox(integers);
+	hList.addActionListener(new chooseHListener());
+	hList.setSelectedIndex(2);
+
+	tList = new JComboBox(integers);
+	tList.addActionListener(new chooseTListener());
+	tList.setSelectedIndex(2);
+
+	LList = new JComboBox(integers);
+	LList.addActionListener(new chooseLListener());
+	LList.setSelectedIndex(2);
+
+	JPanel buttonstatPanel = new JPanel();
+	buttonStatPanelHandler(buttonstatPanel);
 
 	JPanel statPanel = new JPanel();
 	statPanelHandler(statPanel);
 	statPanel.add(scrollPane);
 	statPanel.add(scrollPane2);
-
-
-
     }
 
     private void statPanelHandler(JPanel statPanel) {
 	statPanel.setLayout(new BoxLayout(statPanel, BoxLayout.Y_AXIS));
-
-	statPanel.add(makeLambdaArray);
-	statPanel.add(makeTraffic);
-
 	add(statPanel);
+    }
+
+    private void buttonStatPanelHandler(JPanel buttonstatPanel) {
+
+	buttonstatPanel.setLayout(new BoxLayout(buttonstatPanel, BoxLayout.X_AXIS));
+	buttonstatPanel.add(new JLabel(" Antal Havne:"));
+	buttonstatPanel.add(hList);
+		
+	
+	buttonstatPanel.add(new JLabel(" Skibe/time(lambda):"));
+	buttonstatPanel.add(LList);
+
+	buttonstatPanel.add(makeLambdaArray);
+	buttonstatPanel.add(new JLabel(" tidsperiode timer(t):"));
+	buttonstatPanel.add(tList);
+	
+	buttonstatPanel.add(makeTraffic);
+
+	buttonstatPanel.add(new JLabel(" Estimer antal skibe(k):"));
+	buttonstatPanel.add(kList);
+	buttonstatPanel.add(poisson);
+
+	add(buttonstatPanel);
     }
 
     private void shipsimPanelHandler(JPanel shipsimPanel) {
@@ -215,6 +252,10 @@ public class SimulatorPanel extends JPanel {
 
 	public void actionPerformed(ActionEvent event) {
 
+	    /*
+	     * this convoluted thing will print out a traffic array of ships
+	     * pr t int the stat output, and their intervals in the result output.
+	     */
 	    if (lambdaarray != null) {
 
 		ArrayList<Double> traffictemp = new ArrayList<Double>();
@@ -230,8 +271,8 @@ public class SimulatorPanel extends JPanel {
 		statoutput.append("--------------------------------------------\n");
 		statoutput.append("Printing traffic matrix, ships pr. hour: \n");
 		statoutput.append("--------------------------------------------\n");
-		
-		for (int i = 0; i < lambdaarray.length; i++) {		    
+
+		for (int i = 0; i < lambdaarray.length; i++) {
 		    for (int j = 0; j < lambdaarray[i].length; j++) {
 			//System.out.print(" " + temp[i][j]);
 			if (lambdaarray[i][j] != null) {
@@ -240,39 +281,87 @@ public class SimulatorPanel extends JPanel {
 				traffictemp.add(traffic);
 			    }
 			    statoutput.append("\t" + Integer.toString(traffictemp.size()));
-			    traffictemp.clear();			    
+			    traffictemp.clear();
 			    resultoutput.append("\n");
 			} else {
 			    resultoutput.append(" zero traffic\n");
 			    statoutput.append("\t X ");
 			}
-			
+
 		    }
 		    statoutput.append("\n");
 		    resultoutput.append("--------------------------------------------\n");
 		}
-
-		/*
-		statoutput.append("--------------------------------------------\n");
-		statoutput.append("Printing traffic matrix, ships pr. hour: \n");
-		statoutput.append("--------------------------------------------\n");
-
-		for (int i = 0; i < lambdaarray.length; i++) {
-		    for (int j = 0; j < lambdaarray[i].length; j++) {
-			if (lambdaarray[i][j] != null) {
-			    int nr = sim.makeTraffic(lambdaarray[i][j], t).size();
-			    statoutput.append("\t" + Integer.toString(nr));
-			} else {
-			    statoutput.append("\tX ");
-			}
-		    }
-
-		    statoutput.append("\n");
-		}
-		statoutput.append("--------------------------------------------\n");
-	    */} else {
+	    } else {
 		resultoutput.append("make a lambda array first please \n");
 	    }
+	}
+    }
+
+    private class makePoissonListener implements ActionListener {
+
+	public void actionPerformed(ActionEvent event) {
+
+	   if (lambdaarray != null) {
+	    statoutput.append("Generating Poisson probability Array, P(x=k): \n" +
+		    "This will output a probability matrix for each harbour" +
+		    "where k is the guess value");
+	    statoutput.append("--------------------------------------------\n");
+	    for (int i = 0; i < lambdaarray.length; i++) {
+		for (int j = 0; j < lambdaarray[i].length; j++) {		    
+		    if (lambdaarray[i][j] != null) {
+			DecimalFormat df = new DecimalFormat("#.#####");
+			String temp = df.format(sim.getPoissonProb(t, lambdaarray[i][j], k));
+			statoutput.append("\t" + temp);
+		    } else {
+			statoutput.append("\tX");
+		    }
+		}
+		//System.out.println("");
+		statoutput.append("\n");
+	    }
+
+	    statoutput.append("--------------------------------------------\n");
+	   } else{
+	       resultoutput.append("make a lambda array first please \n");
+	   }
+
+	}
+    }
+
+    private class chooseKListener implements ActionListener {
+
+	public void actionPerformed(ActionEvent event) {
+	    JComboBox cb = (JComboBox) event.getSource();
+	    k = (Integer) cb.getSelectedItem();
+
+	}
+    }
+
+    private class chooseTListener implements ActionListener {
+
+	public void actionPerformed(ActionEvent event) {
+	    JComboBox cb = (JComboBox) event.getSource();
+	    t = (Integer) cb.getSelectedItem();
+
+	}
+    }
+
+    private class chooseLListener implements ActionListener {
+
+	public void actionPerformed(ActionEvent event) {
+	    JComboBox cb = (JComboBox) event.getSource();
+	    lmax = (Integer) cb.getSelectedItem();
+
+	}
+    }
+
+    private class chooseHListener implements ActionListener {
+
+	public void actionPerformed(ActionEvent event) {
+	    JComboBox cb = (JComboBox) event.getSource();
+	    harbournr = (Integer) cb.getSelectedItem();
+
 	}
     }
 }

@@ -14,21 +14,6 @@ import simulator.logic.LogicEntity;
  */
 public class MakeTrafficEvent {
 
-    /*  public void makeTraffic(Integer[][] lambda, int t) {
-
-    for (int i = 0; i < lambda.length; i++) {
-    for (int j = 0; j < lambda[i].length; j++) {
-    //System.out.print(" " + temp[i][j]);
-    if (lambda[i][j] != null) {
-    LogicEntity.getInstance().getTiArray(t, lambda[i][j]);
-    } else {
-    statoutput.append("    X");
-    }
-    }
-
-
-    }
-    }*/
     public ArrayList<Double> makeTrafficArray(int lambda, int t) {
 
 	ArrayList<Double> Ti = new ArrayList<Double>();

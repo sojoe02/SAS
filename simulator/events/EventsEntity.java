@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import simulator.data.DataEntity;
 import simulator.events.sailing.DestReachedEvent;
 import simulator.events.sailing.ShipStartEvent;
+import simulator.events.stat.CalcProbabilityEvent;
 import simulator.events.stat.LambdaArrayEvent;
 import simulator.events.stat.MakeTrafficEvent;
 
@@ -22,6 +23,7 @@ public class EventsEntity {
 
      LambdaArrayEvent lambdaarray;
      MakeTrafficEvent maketraffic;
+     CalcProbabilityEvent getProbability;
 
     private EventsEntity(){
 
@@ -53,5 +55,12 @@ public class EventsEntity {
 	maketraffic = new MakeTrafficEvent();
 
 	return maketraffic.makeTrafficArray(lambda, t);
+    }
+
+    public double getPoissonProb(int t, int L, int k){
+
+	getProbability = new CalcProbabilityEvent();
+
+	return getProbability.probWithPoisson(t, L, k);
     }
 }
