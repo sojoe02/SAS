@@ -57,7 +57,7 @@ public class EventsEntity {
 	return maketraffic.makeTrafficArray(lambda, t);
     }
 
-    public double getPoissonProb(int t, int L, int k){
+    public double getPoissonProb(int t, double L, int k){
 
 	getProbability = new CalcProbabilityEvent();
 

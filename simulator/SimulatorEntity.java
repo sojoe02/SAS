@@ -40,7 +40,7 @@ public class SimulatorEntity {
 	return data.makeTraffic(lambda, t);
     }
 
-    public double getPoissonProb(int t, int L, int k) {
+    public double getPoissonProb(int t, double L, int k) {
 
 	return data.getPoissonProb(t, L, k);
     }

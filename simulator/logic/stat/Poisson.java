@@ -17,9 +17,9 @@ public class Poisson {
 
     private int t;		 //cumulative Ti
     private RandomDistro random;
-    private int L;
+    private double L;
 
-    public Poisson(int t, int L) {
+    public Poisson(int t, double L) {
 
 	this.L = L;
 	this.t = t;
@@ -32,7 +32,7 @@ public class Poisson {
     //to generate a Ti value.
     public double generateTi() {
 	//the mean should be the reciprocal value of lambda
-	return random.getExpRandom(L);
+	return random.getExpRandom((int)L);
     }
 
     //next algorithm that will calculate the odds of a ship passing within a given

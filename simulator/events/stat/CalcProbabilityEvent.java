@@ -13,7 +13,7 @@ import simulator.logic.LogicEntity;
  */
 public class CalcProbabilityEvent {
 
-    public double probWithPoisson(int t, int L, int k){
+    public double probWithPoisson(int t, double L, int k){
 
 	return LogicEntity.getInstance().poissonProb(t, L, k);
 	

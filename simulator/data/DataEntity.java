@@ -45,7 +45,7 @@ public class DataEntity {
 	return events.makeTraffic(lambda, t);
     }
 
-    public double getPoissonProb(int t, int L, int k) {
+    public double getPoissonProb(int t, double L, int k) {
 
 	return events.getPoissonProb(t, L, k);
     }

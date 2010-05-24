@@ -62,7 +62,7 @@ public class LogicEntity {
 
 
 
-    public double poissonProb(int t, int L, int k){
+    public double poissonProb(int t,  double L, int k){
 
 	poisson = new Poisson(t, L);
 	

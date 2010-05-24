@@ -40,12 +40,14 @@ public class SimulatorPanel extends JPanel implements Observer {
      * Constants and variables for use with the statpanel
      */
     private JTextArea statoutput, resultoutput;
-    private JComboBox kList, LList, tList, hList;
+    private JComboBox kList, LList, tList, hList,t_estList;
     private JButton makeLambdaArray, makeTraffic, poisson;
     //lmax er lig antal skibe i timen!
-    private int lmax = 10, harbournr = 6, t = 1, k = 1;
+    private int lmax = 10, harbournr = 6, t = 1, k = 1, t_est = 1;
     private JScrollPane scrollPane, scrollPane2;
     private Integer[][] lambdaarray = null;
+    private Double[][] trafficarray = null;
+
     private Integer[] estimate;
     //---------------------------------------------------------------------
 
@@ -115,6 +117,10 @@ public class SimulatorPanel extends JPanel implements Observer {
 	tList.addActionListener(new chooseTListener());
 	tList.setSelectedIndex(2);
 
+	/*t_estList = new JComboBox(integers);
+	t_estList.addActionListener(new chooseT_estListener());
+	t_estList.setSelectedIndex(2);*/
+
 	LList = new JComboBox(integers);
 	LList.addActionListener(new chooseLListener());
 	LList.setSelectedIndex(2);
@@ -144,13 +150,18 @@ public class SimulatorPanel extends JPanel implements Observer {
 	buttonstatPanel.add(LList);
 
 	buttonstatPanel.add(makeLambdaArray);
-	buttonstatPanel.add(new JLabel(" tidsperiode timer(t):"));
+	buttonstatPanel.add(new JLabel(" Traffik periode(t):"));
 	buttonstatPanel.add(tList);
+
+
+
 
 	buttonstatPanel.add(makeTraffic);
 
 	buttonstatPanel.add(new JLabel(" Estimer antal skibe(k):"));
 	buttonstatPanel.add(kList);
+	buttonstatPanel.add(new JLabel(" PoissonPeriode(t):"));
+//	buttonstatPanel.add(t_estList);
 	buttonstatPanel.add(poisson);
 
 	add(buttonstatPanel);
@@ -274,6 +285,7 @@ public class SimulatorPanel extends JPanel implements Observer {
 
 		ArrayList<Double> traffictemp = new ArrayList<Double>();
 		ArrayList<Integer> number = new ArrayList<Integer>();
+		trafficarray = new Double[lambdaarray.length][lambdaarray.length];
 
 		resultoutput.append("--------------------------------------------\n");
 		resultoutput.append("Generer Traffik: "
@@ -293,11 +305,15 @@ public class SimulatorPanel extends JPanel implements Observer {
 			    for (Double traffic : sim.makeTraffic(lambdaarray[i][j], t)) {
 				resultoutput.append(traffic.toString() + " , ");
 				traffictemp.add(traffic);
+
 			    }
 			    statoutput.append("\t" + Integer.toString(traffictemp.size()));
+			    trafficarray[i][j] = Double.valueOf((double)traffictemp.size()/(double)t);
+			    //System.out.println( Double.valueOf((double)traffictemp.size()/(double)t));
 			    traffictemp.clear();
 			    resultoutput.append("\n");
 			} else {
+			    trafficarray[i][j] = null;
 			    resultoutput.append(" Ingen Traffik\n");
 			    statoutput.append("\tX ");
 			}
@@ -316,17 +332,15 @@ public class SimulatorPanel extends JPanel implements Observer {
 
 	public void actionPerformed(ActionEvent event) {
 
-	    if (lambdaarray != null) {
+	    if (trafficarray != null) {
 		statoutput.append("--------------------------------------------\n");
-		statoutput.append("Genere et Poisson sansyndligheds matrice: \n"
-			+ "Output er sandsyndlighed (i procent) for hver harbour\n"
-			+ "hvor k er det antal skibe man vil estimere på\n");
+		statoutput.append("Poisson sansyndligheds matrice (%): \n");
 		statoutput.append("--------------------------------------------\n");
-		for (int i = 0; i < lambdaarray.length; i++) {
-		    for (int j = 0; j < lambdaarray[i].length; j++) {
-			if (lambdaarray[i][j] != null) {
+		for (int i = 0; i < trafficarray.length; i++) {
+		    for (int j = 0; j < trafficarray[i].length; j++) {
+			if (trafficarray[i][j] != null) {
 			    DecimalFormat df = new DecimalFormat("###.###");
-			    String temp = df.format(100 * sim.getPoissonProb(t, lambdaarray[i][j], k));
+			    String temp = df.format(100 * sim.getPoissonProb(t, trafficarray[i][j], k));
 			    statoutput.append("\t" + temp);
 			} else {
 			    statoutput.append("\tX");
@@ -338,7 +352,7 @@ public class SimulatorPanel extends JPanel implements Observer {
 
 		statoutput.append("--------------------------------------------\n");
 	    } else {
-		resultoutput.append("Lav et vægtingsarray først (sæt traffik) \n");
+		resultoutput.append("Lav noget traffik først (sæt traffik) \n");
 	    }
 
 	}
@@ -349,7 +363,6 @@ public class SimulatorPanel extends JPanel implements Observer {
 	public void actionPerformed(ActionEvent event) {
 	    JComboBox cb = (JComboBox) event.getSource();
 	    k = (Integer) cb.getSelectedItem();
-
 	}
     }
 
@@ -358,7 +371,6 @@ public class SimulatorPanel extends JPanel implements Observer {
 	public void actionPerformed(ActionEvent event) {
 	    JComboBox cb = (JComboBox) event.getSource();
 	    t = (Integer) cb.getSelectedItem();
-
 	}
     }
 
@@ -367,7 +379,6 @@ public class SimulatorPanel extends JPanel implements Observer {
 	public void actionPerformed(ActionEvent event) {
 	    JComboBox cb = (JComboBox) event.getSource();
 	    lmax = (Integer) cb.getSelectedItem();
-
 	}
     }
 
@@ -376,7 +387,14 @@ public class SimulatorPanel extends JPanel implements Observer {
 	public void actionPerformed(ActionEvent event) {
 	    JComboBox cb = (JComboBox) event.getSource();
 	    harbournr = (Integer) cb.getSelectedItem();
+	}
+    }
 
+       private class chooseT_estListener implements ActionListener {
+
+	public void actionPerformed(ActionEvent event) {
+	    JComboBox cb = (JComboBox) event.getSource();
+	    t_est = (Integer) cb.getSelectedItem();
 	}
     }
 
