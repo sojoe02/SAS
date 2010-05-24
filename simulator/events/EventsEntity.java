@@ -4,10 +4,12 @@
  */
 package simulator.events;
 
+import java.util.ArrayList;
 import simulator.data.DataEntity;
 import simulator.events.sailing.DestReachedEvent;
 import simulator.events.sailing.ShipStartEvent;
 import simulator.events.stat.LambdaArrayEvent;
+import simulator.events.stat.MakeTrafficEvent;
 
 
 /**
@@ -19,12 +21,13 @@ public class EventsEntity {
      private static EventsEntity events = new EventsEntity();
 
      LambdaArrayEvent lambdaarray;
+     MakeTrafficEvent maketraffic;
 
     private EventsEntity(){
 
     }
 
-     public static EventsEntity getInstance(){
+     public static synchronized EventsEntity getInstance(){
 	 return events;
      }
 
@@ -43,5 +46,12 @@ public class EventsEntity {
 	lambdaarray = new LambdaArrayEvent(maxvalue, harbours);
 
 	return lambdaarray.lambdaArray();
+    }
+
+    public ArrayList<Double> makeTraffic(int lambda, int t){
+
+	maketraffic = new MakeTrafficEvent();
+
+	return maketraffic.makeTrafficArray(lambda, t);
     }
 }

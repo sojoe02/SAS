@@ -4,6 +4,7 @@
  */
 package simulator.data;
 
+import java.util.ArrayList;
 import simulator.events.EventsEntity;
 
 /**
@@ -13,12 +14,14 @@ import simulator.events.EventsEntity;
 public class DataEntity {
 
     getRoute getroute;
+    EventsEntity events;
     private static DataEntity data = new DataEntity();
 
     private DataEntity() {
+	events = EventsEntity.getInstance();
     }
 
-    public static DataEntity getInstance() {
+    public static synchronized DataEntity getInstance() {
 
 	return data;
     }
@@ -35,6 +38,11 @@ public class DataEntity {
 
        public Integer[][] makeLambdaArray(int maxvalue, int harbours){
 	
-	return EventsEntity.getInstance().makeLambdaArray(maxvalue, harbours);
+	return events.makeLambdaArray(maxvalue, harbours);
+    }
+
+       public ArrayList<Double> makeTraffic(int lambda, int t){
+
+	return events.makeTraffic(lambda, t);
     }
 }

@@ -28,7 +28,7 @@ public class LogicEntity {
     private LogicEntity() {
     }
 
-    public static LogicEntity getInstance() {
+    public static synchronized LogicEntity getInstance() {
 	return logic;
     }
 
@@ -39,11 +39,11 @@ public class LogicEntity {
 	return shiplogic.getNextPos(to, from, v, time);
     }
 
-    public double getExpRandom(int mean) {
+    public double getExpRandom(int lambda) {
 
 	randomgenExp = new RandomDistro();
 
-	return randomgenExp.getExpRandom(mean);
+	return randomgenExp.getExpRandom(lambda);
     }    
 
     public int getRandLambda(int maxvalue){
@@ -62,10 +62,10 @@ public class LogicEntity {
 
 
 
-    public ArrayList<Double> getTiArray(int t, int L) {
+    /*public ArrayList<Double> getTiArray(int t, int L) {
 
 	poisson = new Poisson(t, L);
 
 	return poisson.getTiArray();
-    }
+    }*/
 }

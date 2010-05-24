@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-
 /**
  *
  * @author Zagadka
@@ -39,9 +38,10 @@ public class SimulatorPanel extends JPanel {
      * Constants and variables for use with the statpanel
      */
     private JTextArea statoutput;
-    private JButton makeLambdaArray;
-    private int lmax = 10, harbournr = 6;
+    private JButton makeLambdaArray, makeTraffic;
+    private int lmax = 10, harbournr = 6, t = 1;
     private JScrollPane scrollPane;
+    private Integer[][] lambdaarray = null;
     //---------------------------------------------------------------------
 
     public SimulatorPanel() {
@@ -91,6 +91,9 @@ public class SimulatorPanel extends JPanel {
 	makeLambdaArray = new JButton("Make lambda Array");
 	makeLambdaArray.addActionListener(new makeLambdaArrayListener());
 
+	makeTraffic = new JButton("Make traffic");
+	makeTraffic.addActionListener(new makeTrafficListener());
+
 
 	JPanel statPanel = new JPanel();
 	statPanelHandler(statPanel);
@@ -100,6 +103,7 @@ public class SimulatorPanel extends JPanel {
     private void statPanelHandler(JPanel statPanel) {
 
 	statPanel.add(makeLambdaArray);
+	statPanel.add(makeTraffic);
 
 	add(statPanel);
     }
@@ -173,18 +177,47 @@ public class SimulatorPanel extends JPanel {
 
 	public void actionPerformed(ActionEvent event) {
 
-	    Integer[][] temp = sim.makeLambdaArray(harbournr, lmax);
+	    lambdaarray = sim.makeLambdaArray(harbournr, lmax);
 
 	    statoutput.append("Generating LambdaArray: \n");
 	    statoutput.append("--------------------------------------------\n");
-	    for (int i = 0; i < temp.length; i++) {
-		for (int j = 0; j < temp[i].length; j++) {
+	    for (int i = 0; i < lambdaarray.length; i++) {
+		for (int j = 0; j < lambdaarray[i].length; j++) {
 		    //System.out.print(" " + temp[i][j]);
-		    if (temp[i][j] != null) {
-			statoutput.append("    " + temp[i][j].toString());
+		    if (lambdaarray[i][j] != null) {
+			statoutput.append("    " + lambdaarray[i][j].toString());
 		    } else {
 			statoutput.append("    X");
 		    }
+		}
+		//System.out.println("");
+		statoutput.append("\n");
+	    }
+
+	    statoutput.append("--------------------------------------------\n");
+
+
+	}
+    }
+
+    private class makeTrafficListener implements ActionListener {
+
+	public void actionPerformed(ActionEvent event) {
+
+
+	    statoutput.append("Generating Traffic: \n");
+	    statoutput.append("--------------------------------------------\n");
+	    for (int i = 0; i < lambdaarray.length; i++) {
+		for (int j = 0; j < lambdaarray[i].length; j++) {
+		    //System.out.print(" " + temp[i][j]);
+		    if (lambdaarray[i][j] != null) {
+			for (Double traffic : sim.makeTraffic(lambdaarray[i][j], t)) {
+			    statoutput.append(traffic.toString() + " , ");
+			}
+		    } else {
+			statoutput.append(" zero traffic ");
+		    }
+		    statoutput.append("\n");
 		}
 		//System.out.println("");
 		statoutput.append("\n");
