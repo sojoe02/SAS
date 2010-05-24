@@ -38,8 +38,11 @@ public class MakeTrafficEvent {
 
 	while (j < t) {
 	    i = LogicEntity.getInstance().getExpRandom(lambda);
-	    Ti.add(i);
 	    j += i;
+	    if(j < t){
+	    Ti.add(i);
+	    }
+	    
 	}
 	return Ti;
     }
