@@ -5,14 +5,12 @@
 package simulator.events.sailing;
 
 import java.util.Observable;
+
 /**
  *
  * @author Zagadka
  */
-
-
-
-public class DestReachedEvent extends Observable{
+public class DestReachedEvent extends Observable {
 
     //private static DestReachedEvent dest = new DestReachedEvent();
 
@@ -20,11 +18,8 @@ public class DestReachedEvent extends Observable{
      * changed
      * if not do a reach harbourevent and the trip is done.
      */
-
-    public void DestReachedEvent() {   
-    setChanged();
+    public void DestReachedEvent() {
+	setChanged();
 	notifyObservers();
     }
-
-    
 }

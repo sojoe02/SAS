@@ -4,11 +4,12 @@
  */
 package simulator;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,7 +22,7 @@ import javax.swing.JTextArea;
  *
  * @author Zagadka
  */
-public class SimulatorPanel extends JPanel {
+public class SimulatorPanel extends JPanel implements Observer {
 
     private JButton startship;
     private SimulatorEntity sim;
@@ -30,8 +31,7 @@ public class SimulatorPanel extends JPanel {
      * Constants and variables for use witht the shipsimulatorpanel:
      */
     private String[] Harbours = {"Odense", "NewOrleans", "CapeTown"};
-    private Integer[] integers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18
-	    , 20, 30, 40, 50 ,60, 70 ,80 ,90 ,100};
+    private Integer[] integers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 30, 40, 50, 60, 70, 80, 90, 100};
     private String to, from;
     private int speed, time;
     private static int shipID = 110;
@@ -77,7 +77,7 @@ public class SimulatorPanel extends JPanel {
 
 	sim = SimulatorEntity.getInstance();
 
-	startship = new JButton("launch the ship");
+	startship = new JButton("Affyr skib");
 	startship.addActionListener(new startshipListener());
 
 	JPanel shipsimPanel = new JPanel();
@@ -138,15 +138,15 @@ public class SimulatorPanel extends JPanel {
 	buttonstatPanel.setLayout(new BoxLayout(buttonstatPanel, BoxLayout.X_AXIS));
 	buttonstatPanel.add(new JLabel(" Antal Havne:"));
 	buttonstatPanel.add(hList);
-		
-	
-	buttonstatPanel.add(new JLabel(" Skibe/time(lambda):"));
+
+
+	buttonstatPanel.add(new JLabel(" Skibe pr.time:"));
 	buttonstatPanel.add(LList);
 
 	buttonstatPanel.add(makeLambdaArray);
 	buttonstatPanel.add(new JLabel(" tidsperiode timer(t):"));
 	buttonstatPanel.add(tList);
-	
+
 	buttonstatPanel.add(makeTraffic);
 
 	buttonstatPanel.add(new JLabel(" Estimer antal skibe(k):"));
@@ -173,13 +173,19 @@ public class SimulatorPanel extends JPanel {
 	add(shipsimPanel);
     }
 
-       public void fillEstimateArray(){
+    public void fillEstimateArray() {
 	int max = 300;
 	estimate = new Integer[max];
 	//ArrayList<Integer> temp = new ArrayList<Integer>();
-	for(int i = 0 ; i < 300 ; i ++){
-	   estimate[i]=i;
+	for (int i = 0; i < 300; i++) {
+	    estimate[i] = i;
 	}
+    }
+    public void update(Observable o, Object o1) {
+	resultoutput.append("--------------------------------------------\n");
+	resultoutput.append("Skib nr." + (String)o1 + " er gået i havn \n");
+	resultoutput.append("--------------------------------------------\n");
+	
     }
 
     private class startshipListener implements ActionListener {
@@ -236,7 +242,7 @@ public class SimulatorPanel extends JPanel {
 
 	    lambdaarray = sim.makeLambdaArray(harbournr, lmax);
 	    statoutput.append("--------------------------------------------\n");
-	    statoutput.append("Generating LambdaArray, ships pr. hour(lambda): \n");
+	    statoutput.append("Generer Lambda matrice, skibe pr. time(lambda): \n");
 	    statoutput.append("--------------------------------------------\n");
 	    for (int i = 0; i < lambdaarray.length; i++) {
 		for (int j = 0; j < lambdaarray[i].length; j++) {
@@ -260,7 +266,6 @@ public class SimulatorPanel extends JPanel {
     private class makeTrafficListener implements ActionListener {
 
 	public void actionPerformed(ActionEvent event) {
-
 	    /*
 	     * this convoluted thing will print out a traffic array of ships
 	     * pr t int the stat output, and their intervals in the result output.
@@ -271,14 +276,14 @@ public class SimulatorPanel extends JPanel {
 		ArrayList<Integer> number = new ArrayList<Integer>();
 
 		resultoutput.append("--------------------------------------------\n");
-		resultoutput.append("Generating Traffic: "
-			+ "(through exponential distribution)\n");
+		resultoutput.append("Generer Traffik: "
+			+ "(via exponential distribution)\n");
 		resultoutput.append("--------------------------------------------\n");
-		resultoutput.append("Printing results by row: \n");
+		resultoutput.append("Printer resultater pr række: \n");
 		resultoutput.append("--------------------------------------------\n");
 
 		statoutput.append("--------------------------------------------\n");
-		statoutput.append("Printing traffic matrix, ships pr. timeslot: \n");
+		statoutput.append("Printer traffik matrice, skibe pr. timeslot: \n");
 		statoutput.append("--------------------------------------------\n");
 
 		for (int i = 0; i < lambdaarray.length; i++) {
@@ -293,8 +298,8 @@ public class SimulatorPanel extends JPanel {
 			    traffictemp.clear();
 			    resultoutput.append("\n");
 			} else {
-			    resultoutput.append(" zero traffic\n");
-			    statoutput.append("\t X ");
+			    resultoutput.append(" Ingen Traffik\n");
+			    statoutput.append("\tX ");
 			}
 
 		    }
@@ -302,7 +307,7 @@ public class SimulatorPanel extends JPanel {
 		    resultoutput.append("--------------------------------------------\n");
 		}
 	    } else {
-		resultoutput.append("make a lambda array first please \n");
+		resultoutput.append("Lav et vægtingsarray først (sæt traffik) \n");
 	    }
 	}
     }
@@ -311,30 +316,30 @@ public class SimulatorPanel extends JPanel {
 
 	public void actionPerformed(ActionEvent event) {
 
-	   if (lambdaarray != null) {
-	    statoutput.append("--------------------------------------------\n");
-	    statoutput.append("Generating Poisson probability Array, P(x=k): \n" +
-		    "This will output a probability matrix for each harbour" +
-		    "where k is the guess value\n");
-	    statoutput.append("--------------------------------------------\n");
-	    for (int i = 0; i < lambdaarray.length; i++) {
-		for (int j = 0; j < lambdaarray[i].length; j++) {		    
-		    if (lambdaarray[i][j] != null) {
-			DecimalFormat df = new DecimalFormat("#.#########");
-			String temp = df.format(sim.getPoissonProb(t, lambdaarray[i][j], k));
-			statoutput.append("\t" + temp);
-		    } else {
-			statoutput.append("\tX");
+	    if (lambdaarray != null) {
+		statoutput.append("--------------------------------------------\n");
+		statoutput.append("Genere et Poisson sansyndligheds matrice: \n"
+			+ "Output er sandsyndlighed (i procent) for hver harbour\n"
+			+ "hvor k er det antal skibe man vil estimere på\n");
+		statoutput.append("--------------------------------------------\n");
+		for (int i = 0; i < lambdaarray.length; i++) {
+		    for (int j = 0; j < lambdaarray[i].length; j++) {
+			if (lambdaarray[i][j] != null) {
+			    DecimalFormat df = new DecimalFormat("###.###");
+			    String temp = df.format(100 * sim.getPoissonProb(t, lambdaarray[i][j], k));
+			    statoutput.append("\t" + temp);
+			} else {
+			    statoutput.append("\tX");
+			}
 		    }
+		    //System.out.println("");
+		    statoutput.append("\n");
 		}
-		//System.out.println("");
-		statoutput.append("\n");
-	    }
 
-	    statoutput.append("--------------------------------------------\n");
-	   } else{
-	       resultoutput.append("make a lambda array first please \n");
-	   }
+		statoutput.append("--------------------------------------------\n");
+	    } else {
+		resultoutput.append("Lav et vægtingsarray først (sæt traffik) \n");
+	    }
 
 	}
     }
@@ -375,5 +380,5 @@ public class SimulatorPanel extends JPanel {
 	}
     }
 
- 
+    
 }

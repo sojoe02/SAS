@@ -16,6 +16,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import presentation.mappanel.MapPanelEntity;
 import simulator.SimulatorPanel;
+import simulator.events.sailing.ReachHarbourEvent;
 
 // This example demonstrates the use of JButton, JTextField and JLabel.
 public class GuiLauncherWithoutDB extends JFrame {
@@ -59,8 +60,12 @@ public class GuiLauncherWithoutDB extends JFrame {
 	
 	
 	
-	// Show the converter.
-	tabbed.addTab("Skibsinfo", shipicon, new SimulatorPanel(), "Vis Skipsinfo");
+	//add the observer for harbourevents.
+	SimulatorPanel simpanel = new SimulatorPanel();
+	ReachHarbourEvent.getInstance().addObserver(simpanel);
+
+
+	tabbed.addTab("Skibsinfo", shipicon, simpanel, "Vis Skipsinfo");
 	//add the map to a tab.
 	tabbed.addTab("Kort", mapicon, MapPanelEntity.getInstance().showMap(), "Kort til visning af skibspositioner");
 

@@ -50,8 +50,7 @@ public class ShipStartEvent implements Observer {
     }
 
     public void update(Observable o, Object o1) {
-
-	System.out.println("WAT");
+	
 	if (counter < harbourstart) {
 
 	    from = new Coordinates(lat[counter-1], lon[counter-1]);
@@ -62,7 +61,7 @@ public class ShipStartEvent implements Observer {
 	    counter ++;
 
 	} else {
-	    new ReachHarbourEvent();
+	    ReachHarbourEvent.getInstance().HarbourReachedEvent(shipID);
 	}
     }
 }
