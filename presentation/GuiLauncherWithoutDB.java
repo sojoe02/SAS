@@ -88,17 +88,17 @@ public class GuiLauncherWithoutDB extends JFrame {
 
 
 
-	try {
+	/*try {
 	    UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
 	} catch (ClassNotFoundException classNotFoundException) {
 	} catch (InstantiationException instantiationException) {
 	} catch (IllegalAccessException illegalAccessException) {
-	} catch (UnsupportedLookAndFeelException unsupportedLookAndFeelException) {
+	} catch (UnsupportedLookAndFeelException unsupportedLookAndFeelException) {*/
 	    try {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 	    } catch (Exception e) {
 	    }
-	}
+	
 	//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 	/*for (int i = 0; i < 80; i++) {
 	new Thread(new GpsSim2(i)).start();

@@ -7,6 +7,7 @@ package simulator;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -37,11 +38,11 @@ public class SimulatorPanel extends JPanel {
     /*
      * Constants and variables for use with the statpanel
      */
-    private JTextArea statoutput;
+    private JTextArea statoutput, resultoutput;
     private JButton makeLambdaArray, makeTraffic;
     //lmax er lig antal skibe i timen!
     private int lmax = 10, harbournr = 6, t = 1;
-    private JScrollPane scrollPane;
+    private JScrollPane scrollPane, scrollPane2;
     private Integer[][] lambdaarray = null;
     //---------------------------------------------------------------------
 
@@ -83,9 +84,13 @@ public class SimulatorPanel extends JPanel {
 	//next the stat panel.
 
 
-	statoutput = new JTextArea(20, 70);
+	statoutput = new JTextArea(15, 70);
 	statoutput.setEditable(false);
 	scrollPane = new JScrollPane(statoutput);
+
+	resultoutput = new JTextArea(15, 70);
+	resultoutput.setEditable(false);
+	scrollPane2 = new JScrollPane(resultoutput);
 
 
 
@@ -98,10 +103,15 @@ public class SimulatorPanel extends JPanel {
 
 	JPanel statPanel = new JPanel();
 	statPanelHandler(statPanel);
-	statPanel.add(scrollPane, BorderLayout.CENTER);
+	statPanel.add(scrollPane);
+	statPanel.add(scrollPane2);
+
+
+
     }
 
     private void statPanelHandler(JPanel statPanel) {
+	statPanel.setLayout(new BoxLayout(statPanel, BoxLayout.Y_AXIS));
 
 	statPanel.add(makeLambdaArray);
 	statPanel.add(makeTraffic);
@@ -111,7 +121,7 @@ public class SimulatorPanel extends JPanel {
 
     private void shipsimPanelHandler(JPanel shipsimPanel) {
 
-	//shipsimPanel.setLayout(new BoxLayout(shipsimPanel, BoxLayout.Y_AXIS));
+	shipsimPanel.setLayout(new BoxLayout(shipsimPanel, BoxLayout.X_AXIS));
 
 	shipsimPanel.add(new JLabel("Hastighed:"));
 	shipsimPanel.add(speedList);
@@ -205,44 +215,64 @@ public class SimulatorPanel extends JPanel {
 
 	public void actionPerformed(ActionEvent event) {
 
+	    if (lambdaarray != null) {
 
-	    statoutput.append("Generating Traffic: " +
-		    "(through exponential distribution)\n");
-	    statoutput.append("--------------------------------------------\n");
-	    statoutput.append("Printing results by row: \n");
-	    for (int i = 0; i < lambdaarray.length; i++) {		
+		ArrayList<Double> traffictemp = new ArrayList<Double>();
+		ArrayList<Integer> number = new ArrayList<Integer>();
+
+		resultoutput.append("--------------------------------------------\n");
+		resultoutput.append("Generating Traffic: "
+			+ "(through exponential distribution)\n");
+		resultoutput.append("--------------------------------------------\n");
+		resultoutput.append("Printing results by row: \n");
+		resultoutput.append("--------------------------------------------\n");
+
 		statoutput.append("--------------------------------------------\n");
-		for (int j = 0; j < lambdaarray[i].length; j++) {
-		    //System.out.print(" " + temp[i][j]);
-		    if (lambdaarray[i][j] != null) {
-
-			for (Double traffic : sim.makeTraffic(lambdaarray[i][j], t)) {
-			    statoutput.append(traffic.toString() + " , ");
+		statoutput.append("Printing traffic matrix, ships pr. hour: \n");
+		statoutput.append("--------------------------------------------\n");
+		
+		for (int i = 0; i < lambdaarray.length; i++) {		    
+		    for (int j = 0; j < lambdaarray[i].length; j++) {
+			//System.out.print(" " + temp[i][j]);
+			if (lambdaarray[i][j] != null) {
+			    for (Double traffic : sim.makeTraffic(lambdaarray[i][j], t)) {
+				resultoutput.append(traffic.toString() + " , ");
+				traffictemp.add(traffic);
+			    }
+			    statoutput.append("\t" + Integer.toString(traffictemp.size()));
+			    traffictemp.clear();			    
+			    resultoutput.append("\n");
+			} else {
+			    resultoutput.append(" zero traffic\n");
+			    statoutput.append("\t X ");
 			}
-
-		    } else {
-			statoutput.append(" zero traffic ");
-			//statoutput.append(" X ");
+			
 		    }
 		    statoutput.append("\n");
+		    resultoutput.append("--------------------------------------------\n");
 		}
-	    }
-	    statoutput.append("--------------------------------------------\n");
-	    statoutput.append("Printing traffic matrix, ships pr. hour: \n");
-	    statoutput.append("--------------------------------------------\n");
 
-	    for (int i = 0; i < lambdaarray.length; i++) {
-		for (int j = 0; j < lambdaarray[i].length; j++) {
-		    if (lambdaarray[i][j] != null) {
-			int nr = sim.makeTraffic(lambdaarray[i][j], t).size();
-			statoutput.append("\t" + Integer.toString(nr));
-		    } else {
-			statoutput.append("\tX ");
+		/*
+		statoutput.append("--------------------------------------------\n");
+		statoutput.append("Printing traffic matrix, ships pr. hour: \n");
+		statoutput.append("--------------------------------------------\n");
+
+		for (int i = 0; i < lambdaarray.length; i++) {
+		    for (int j = 0; j < lambdaarray[i].length; j++) {
+			if (lambdaarray[i][j] != null) {
+			    int nr = sim.makeTraffic(lambdaarray[i][j], t).size();
+			    statoutput.append("\t" + Integer.toString(nr));
+			} else {
+			    statoutput.append("\tX ");
+			}
 		    }
+
+		    statoutput.append("\n");
 		}
-		statoutput.append("\n");
+		statoutput.append("--------------------------------------------\n");
+	    */} else {
+		resultoutput.append("make a lambda array first please \n");
 	    }
-	    statoutput.append("--------------------------------------------\n");
 	}
     }
 }
