@@ -39,7 +39,7 @@ public class ShipStartEvent implements Observer {
 	this.v = v;
 	this.shipID = shipID;
 	this.time = time;
-	System.out.println("WAT");
+	
 	from = new Coordinates(lat[counter], lon[counter]);
 	to = new Coordinates(lat[counter + 1], lon[counter + 1]);
 	MapPanelEntity.getInstance().addShip(shipID);

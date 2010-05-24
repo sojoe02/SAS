@@ -4,14 +4,13 @@
  */
 package simulator.logic.stat;
 
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-
 /**
  *
  * @author japper
- * This class will deal with poisson distrubtion using the lambda class and
+ * This class will deal with the poisson process using the lambda class and
  * the RandomDistro class.
  */
 public class Poisson {
@@ -41,25 +40,32 @@ public class Poisson {
 
     public double poisson(int k){
 
-	//using bigintegers because looss of precision is very likely when
+	//Using bigdecimals because loss of precision is very likely when
 	//doing factorial, even 64bit long might not be enough if a guess might
-	//be 300 ships pr timeinterval.
-        BigInteger N = BigInteger.ONE;
+	//be 100 ships pr timeinterval which is 100!.
+        BigDecimal N = BigDecimal.ONE;
 
 	//doing the factorial!
         for (int i=1; i<=k; i++) {
-            N = N.multiply(BigInteger.valueOf(i));
-        }
+            N = N.multiply(BigDecimal.valueOf(i));
+        }	
+	BigDecimal Lambda;
+	Lambda = BigDecimal.valueOf(L);
 
-	BigInteger Lambda;
-	Lambda = BigInteger.valueOf(L);
+	BigDecimal T;
+	T = BigDecimal.valueOf(t);
 
-	//calculating lambda^k/k!, making two bigintegers instead of a float.
-	BigInteger[] temp = Lambda.pow(k).divideAndRemainder(N);
+	//calculating lambda^k/k!.
+	BigDecimal temp1 = T.multiply(Lambda);
+
+	
+	BigDecimal temp = temp1.pow(k).divide(N, 1,BigDecimal.ROUND_DOWN);
 
 	//And no precision is lost!
-	double P = Double.parseDouble(temp[0].toString() + "." + temp[1].toString())
-		*Math.exp(-L);
+	double P = temp.doubleValue()
+		* Math.exp(-L*t) ;
+	
+
 	return P;
 
     }

@@ -59,11 +59,11 @@ public class RouteHandler {
 	for (String i : coordinates) {
 	    if (j == 0) {
 		longditude[k] = Double.parseDouble(i);
-		System.out.println(longditude[k]);
+		
 		j++;
 	    } else if (j == 1) {
 		latitude[k] = Double.parseDouble(i);
-		System.out.println(latitude[k]);
+		
 		k++;
 		j = 0;
 	    }

@@ -21,8 +21,7 @@ public class DestReachedEvent extends Observable{
      * if not do a reach harbourevent and the trip is done.
      */
 
-    public void DestReachedEvent() {
-    System.out.println("dest reached working?");
+    public void DestReachedEvent() {   
     setChanged();
 	notifyObservers();
     }

@@ -50,10 +50,7 @@ public class ShipMovementEvent implements Runnable {
 	from = LogicEntity.getInstance().movShip(to, from, v, time);
 
 	MapPanelEntity.LATITUDE.put(shipID, from.getLat());
-	MapPanelEntity.LONGDITUDE.put(shipID, from.getLong());
-	
-
-	
+	MapPanelEntity.LONGDITUDE.put(shipID, from.getLong());	
 	
 	//comparing doubles with tolerance.
 	if (Math.abs(from.getLat() - to.getLat())< tolerance &&
