@@ -1,19 +1,20 @@
 package domain.entity;
 
-/**
- *
- * @author skytthe
- */
+
 public class EHarbour {
 
-	private String Name;
+	private String name;
 	private String coordinate;
 	private String nationality;
 
-	public EHarbour(String Name, String coordinate, String nationality) {
-		this.Name = Name;
-		this.coordinate = coordinate;
-		this.nationality = nationality;
+	public EHarbour(String name, String coordinate, String nationality) {
+	    this.name = name;
+	    this.coordinate = coordinate;
+	    this.nationality = nationality;
+
+	    System.out.println("havn: " + name);
+	    System.out.println(this);
+	    System.out.println("-----------------------");
 	}
 
 

@@ -10,7 +10,7 @@ CREATE TABLE Harbour (
 	PRIMARY KEY (Name)
 );
 CREATE TABLE Ship (
-	shipID				INT(4)			NOT NULL,
+	shipID				INT(4)			NOT NULL	AUTO_INCREMENT,
 	name				VARCHAR(30)		NOT NULL,
 	captain				VARCHAR(30)		NOT NULL,
 	maxContainers			INT(4)			NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE Ship (
 );
 
 CREATE TABLE Container (
-	containerID			INT(4)			NOT NULL,
+	containerID			INT(4)			NOT NULL	AUTO_INCREMENT,
 	shipID				INT(4)			NOT NULL,
 	orderID				INT(4)			NOT NULL,
 	content				VARCHAR(30)		NOT NULL,
@@ -35,12 +35,14 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Orders (
-	orderID				INT(4)			NOT NULL	AUTO_INCREMENT,
+	orderID				INT(4)			NOT NULL,
 	userID				INT(4)			NOT NULL,
+	shipID				INT(4)			NOT NULL,
 	containers			INT(4)			NOT NULL,
 	startScheduling			INT(4)			NOT NULL,
 	endScheduling			INT(4)			NOT NULL,
 	content				VARCHAR(30)		NOT NULL,
+	orderStatus			VARCHAR(15)		NOT NULL,
 	PRIMARY KEY (orderID)	
 );
 
@@ -56,11 +58,11 @@ CREATE TABLE Scheduling (
 
 
 CREATE TABLE accessControl (
-	userID					INT(4)			NOT NULL,
-	adminAccess				BOOLEAN			NOT NULL,
-	simulatorAccess			BOOLEAN			NOT NULL,
-	shipView	  			VARCHAR(8)		NOT NULL,
-	orderView	 			VARCHAR(9)		NOT NULL,
+	userID				INT(4)			NOT NULL,
+	adminAccess			BOOLEAN			NOT NULL,
+	simulatorAccess		        BOOLEAN			NOT NULL,
+	shipView	  		VARCHAR(8)		NOT NULL,
+	orderView	 		VARCHAR(9)		NOT NULL,
 	containerView			VARCHAR(13)		NOT NULL,
 	PRIMARY KEY(userID)
 );
@@ -81,9 +83,10 @@ INSERT INTO Harbour	VALUES
 	('Cape Town', '-90.06591796875, 29.954934549656144', 'South Africa')	
 ;
 
-INSERT INTO Ship VALUES
-	(1, 'Neil Young', 'Dan Nguyen', 25),
-	(2, 'Melua', 'Mats Larsen', 30)
+INSERT INTO Ship (name,captain,maxContainers) VALUES
+	('Neil Young', 'Dan Nguyen', 25),
+	('Melua', 'Mats Larsen', 30),
+	('Emma','Søren Jørgensen',28)
 ;
 
 INSERT INTO Users VALUES
@@ -104,36 +107,60 @@ INSERT INTO accessControl VALUES
 ;
 
 INSERT INTO Scheduling (eventType,eventDate,harbour,shipID,currentContainers) VALUES
-    ('Departure', '2010-05-02', 'Odense', 1, 0),
-    ('Arrival', '2010-05-03', 'Kiel', 1, 0),
-    ('Departure', '2010-05-04', 'Kiel', 1, 0), 
-    ('Arrival', '2010-05-05', 'Hamburg', 1, 0),
-    ('Departure', '2010-05-06', 'Hamburg', 1, 0),
-    ('Arrival', '2010-05-07', 'Amsterdam', 1, 0),
-    ('Departure', '2010-05-08', 'Amsterdam', 1, 0),
-    ('Arrival', '2010-05-16', 'Poole', 1, 0),
-    ('Departure', '2010-05-17', 'Poole', 1, 0),
-    ('Arrival', '2010-05-23', 'Porto', 1, 0),
-    ('Departure', '2010-05-24', 'Porto', 1, 0),
-    ('Arrival', '2010-05-30', 'Valencia', 1, 0),
-    ('Departure', '2010-05-31', 'Valencia', 1, 0),
-    ('Arrival', '2010-06-07', 'Marseille', 1, 0)
+    ('Departure', '2010-05-02', 'Shanghai Deepwater Port', 1, 0),
+    ('Arrival', '2010-05-03', 'Cape Town', 1, 0),
+    ('Departure', '2010-05-04', 'Cape Town', 1, 0),
+    ('Arrival', '2010-05-05', 'Valencia', 1, 0),
+    ('Departure', '2010-05-06', 'Valencia', 1, 0),
+    ('Arrival', '2010-05-07', 'Odense', 1, 0),
+    ('Departure', '2010-05-08', 'Odense', 1, 0),
+    ('Arrival', '2010-05-05', 'New York', 1, 0),
+    ('Departure', '2010-05-06', 'New York', 1, 0),
+    ('Arrival', '2010-05-07', 'New Orleans', 1, 0),
+    ('Departure', '2010-05-08', 'New Orleans', 1, 0),
+    ('Arrival', '2010-05-16', 'Los Angeles', 1, 0),
+    ('Departure', '2010-05-08', 'Los Angeles', 1, 0),
+    ('Arrival', '2010-05-03', 'Sydney', 1, 0),
+    ('Departure', '2010-05-03', 'Sydney', 1, 0),
+    ('Arrival', '2010-05-02', 'Shanghai Deepwater Port', 1, 0)
 ;
 
-INSERT INTO Scheduling (eventType,eventDate,harbour,shipID,currentContainers)
- VALUES
-	('Departure', '2010-06-02', 'Odense', 2, 0), 
-	('Arrival', '2010-06-03', 'Kiel', 2, 0),
-    ('Departure', '2010-06-04', 'Kiel', 2, 0), 
-    ('Arrival', '2010-06-05', 'Hamburg', 2, 0),
-    ('Departure', '2010-06-06', 'Hamburg', 2, 0),
-    ('Arrival', '2010-06-07', 'Amsterdam', 2, 0),
-    ('Departure', '2010-06-08', 'Amsterdam', 2, 0), 
-    ('Arrival', '2010-06-16', 'Poole', 2, 0),
-    ('Departure', '2010-06-17', 'Poole', 2, 0), 
-    ('Arrival', '2010-06-23', 'Porto', 2, 0),
-    ('Departure', '2010-06-24', 'Porto', 2, 0), 
-    ('Arrival', '2010-06-30', 'Valencia', 2, 0),
-    ('Departure', '2010-06-31', 'Valencia', 2, 0), 
-    ('Arrival', '2010-07-07', 'Marseille', 2, 0)
+
+INSERT INTO Scheduling (eventType,eventDate,harbour,shipID,currentContainers) VALUES
+    ('Departure', '2010-05-08', 'Los Angeles', 2, 0),
+    ('Arrival', '2010-05-03', 'Sydney', 2, 0),
+    ('Departure', '2010-05-03', 'Sydney', 2, 0),
+    ('Arrival', '2010-05-02', 'Shanghai Deepwater Port', 2, 0),
+    ('Departure', '2010-05-02', 'Shanghai Deepwater Port', 2, 0),
+    ('Arrival', '2010-05-03', 'Cape Town', 2, 0),
+    ('Departure', '2010-05-04', 'Cape Town', 2, 0),
+    ('Arrival', '2010-05-05', 'Valencia', 2, 0),
+    ('Departure', '2010-05-06', 'Valencia', 2, 0),
+    ('Arrival', '2010-05-07', 'Odense', 2, 0),
+    ('Departure', '2010-05-08', 'Odense', 2, 0),
+    ('Arrival', '2010-05-05', 'New York', 2, 0),
+    ('Departure', '2010-05-06', 'New York', 2, 0),
+    ('Arrival', '2010-05-07', 'New Orleans', 2, 0),
+    ('Departure', '2010-05-08', 'New Orleans', 2, 0),
+    ('Arrival', '2010-05-16', 'Los Angeles', 2, 0)
+;
+
+
+INSERT INTO Scheduling (eventType,eventDate,harbour,shipID,currentContainers) VALUES
+    ('Arrival', '2010-05-05', 'New York', 3, 0),
+    ('Departure', '2010-05-06', 'New York', 3, 0),
+    ('Arrival', '2010-05-07', 'New Orleans', 3, 0),
+    ('Departure', '2010-05-08', 'New Orleans', 3, 0),
+    ('Arrival', '2010-05-16', 'Los Angeles', 3, 0),
+    ('Departure', '2010-05-08', 'Los Angeles', 3, 0),
+    ('Arrival', '2010-05-03', 'Sydney', 3, 0),
+    ('Departure', '2010-05-03', 'Sydney', 3, 0),
+    ('Arrival', '2010-05-02', 'Shanghai Deepwater Port', 3, 0),
+    ('Departure', '2010-05-02', 'Shanghai Deepwater Port', 3, 0),
+    ('Arrival', '2010-05-03', 'Cape Town', 3, 0),
+    ('Departure', '2010-05-04', 'Cape Town', 3, 0),
+    ('Arrival', '2010-05-05', 'Valencia', 3, 0),
+    ('Departure', '2010-05-06', 'Valencia', 3, 0),
+    ('Arrival', '2010-05-07', 'Odense', 3, 0),
+    ('Departure', '2010-05-08', 'Odense', 3, 0)
 ;

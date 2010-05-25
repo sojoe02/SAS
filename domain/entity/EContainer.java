@@ -6,11 +6,15 @@ package domain.entity;
  */
 public class EContainer {
 
-	private String ContainerID;
+	private int ContainerID;
 	private String Content;
 
-	public EContainer(String ContainerID) {
-		this.ContainerID = ContainerID;
+	public EContainer(int ContainerID,String content) {
+	    this.ContainerID = ContainerID;
+	    this.Content = content;
+
+	    //TODO slet
+	    System.out.println("\t \t" + ContainerID + " - " + content + " - " + this);
 	}
 	
 }

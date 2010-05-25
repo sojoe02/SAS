@@ -6,19 +6,14 @@ package domain.entity;
  */
 public class EShippingCompany extends EUser {
 
-	public EShippingCompany(String UserID, String Name) {
+	public EShippingCompany(int UserID, String Name) {
 		super(UserID, Name);
+
+		//TODO slet
+	    System.out.println("\t " + UserID + " - " + Name);
 	}
 
-	@Override
-	void makeOrder() {
-		throw new UnsupportedOperationException("Not supported yet.");
+	public void placeOrder() {
+	    
 	}
-
-	@Override
-	void getOrder() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-
 }

@@ -11,7 +11,7 @@ public class CActioner {
     private MBroker broker;
     private ESAS sas;
 
-    public CActioner() throws ClassNotFoundException {
+    public CActioner() throws Exception {
 	sas = new ESAS();
 	broker = new MBroker(sas);
     }
@@ -37,8 +37,6 @@ public class CActioner {
     //opret order
     public void placeOrder (int userID, int shipID, int startSID, int endSID, int containers, String content) throws Exception {
 	//opretter order i DB
-	// order i entity er under udvikling 
 	broker.placeOrder(userID, shipID, startSID, endSID, containers, content);
     }
-
 }
