@@ -16,6 +16,8 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import simulator.SimulatorPanel;
+import simulator.events.sailing.ReachHarbourEvent;
 
 // This example demonstrates the use of JButton, JTextField and JLabel.
 public class GuiLauncher extends JFrame {
@@ -39,7 +41,10 @@ public class GuiLauncher extends JFrame {
 	JPanel testpanel = new JPanel();
 	JPanel testpanel1 = new JPanel();
 
-	SASframe = new JFrame("SAS, smugling af slaver (og yumyum)");
+	SimulatorPanel simpanel = new SimulatorPanel();
+	ReachHarbourEvent.getInstance().addObserver(simpanel);
+
+	SASframe = new JFrame("SAS");
 	SASframe.setIconImage(Toolkit.getDefaultToolkit().getImage("Images/frameicon.png"));
 
 	SASframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,7 +68,7 @@ public class GuiLauncher extends JFrame {
 
 
 	// Show the converter.
-	tabbed.addTab("Skibsinfo", shipicon, testpanel, "Vis Skipsinfo");
+	tabbed.addTab("Simulatorpanel", shipicon, simpanel, "Simulator");
 	//add the map to a tab.
 	tabbed.addTab("Kort", mapicon, new ShowMap(), "Kort til visning af skibspositioner");
 
