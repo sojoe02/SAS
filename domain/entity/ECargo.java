@@ -11,22 +11,28 @@ import java.util.*;
 
 public class ECargo {
 
-	private int maxContainers;
+    private int maxContainers;
+    private Map<Integer, EContainer> Container = new HashMap<Integer, EContainer>();
 
-	private Map<String, EContainer> Container = new HashMap<String, EContainer>();
+    public ECargo(int maxContainers, ArrayList<String[]> containers) {
+	this.maxContainers = maxContainers;
 
-	public ECargo(int maxContainers, String ShipID) {
-		this.maxContainers = maxContainers;
+	//TODO SLET
+	System.out.println("\t" + this);
 
-
-		for (int i = 1; i < maxContainers+1; i++) {
-			System.out.println(ShipID + i);
-			EContainer container = new EContainer(ShipID + i);
-//			container.
-		}
-
-		//TODO lav løkke der opretter container
+	for(int i = 0; i < containers.size(); i++) {
+	    String[] containerInstans = containers.get(i);
+	    EContainer con = new EContainer(Integer.parseInt(containerInstans[0]), containerInstans[1]);
+	    Container.put(Integer.parseInt(containerInstans[0]), con);
+	    System.out.println(con);
 	}
+    }
 
+    public int getMaxContainers() {
+	return maxContainers;
+    }
 
+    public EContainer getContainer(int containerID) {
+	return Container.get(containerID);
+    }
 }

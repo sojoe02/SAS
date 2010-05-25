@@ -1,20 +1,31 @@
 package domain.entity;
 
-import java.util.ArrayList;
 
-/**
- *
- * @author skytthe
- */
+
+
+
+
 public class EScheduling {
 
-	private EHarbour startHarbour;
-	private EHarbour endHarbour;
+    private int schedulingID;
+    private String eventType;
+    private String eventDate;
+    private int currentContainers;
+    private EHarbour harbour;
 
-	public EScheduling() {
-		//TODO
-	}
+    public EScheduling(int schedulingID, String eventType, String eventDate, int currentContainers, EHarbour harbour) {
+	this.schedulingID = schedulingID;
+	this.eventType = eventType;
+	this.eventDate = eventDate;
+	this.currentContainers = currentContainers;
+	this.harbour = harbour;
+
+	System.out.println("\t" + this + " - " + schedulingID + " - " + harbour + " - " + eventType);
+    }
 
 
+    public int getSchedulingID() {
+	return schedulingID;
+    }
 
 }

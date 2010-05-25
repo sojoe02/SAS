@@ -14,6 +14,7 @@ public class Pmain {
 	// create control objekt
 	final CActioner control = new CActioner();
 	final PUser user;
+	ArrayList<Integer> userAccess = new ArrayList<Integer>();
 	boolean userIDAccept;
 	//login dialog til indtast af userID, som bruges når der oprettes et PUser objekt og
 	// bruges til at hente accessControl fra databasen
@@ -22,9 +23,8 @@ public class Pmain {
 
 	    try {
 		int userID = Integer.parseInt(dialogInput);
-		ArrayList<Integer> userAccess = control.login(userID);
+		userAccess = control.login(userID);
 		if (userAccess.size() == 3) {
-		    user = new PUser(userAccess);
 		    userIDAccept = false;
 		} else {
 		    JOptionPane.showMessageDialog(null, "userID eksisterer ikke");
@@ -35,7 +35,9 @@ public class Pmain {
 		userIDAccept = true;
 	    }   
 	} while (userIDAccept);
-
+	
+	//opretter PUser objekt ud fra database kald
+	user = new PUser(userAccess);
 	//starter GUI
 	SwingUtilities.invokeLater(new Runnable() {
 	    public void run() {

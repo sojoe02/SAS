@@ -6,14 +6,11 @@ package domain.entity;
  */
 public abstract class EUser {
 
-	private String UserID;
+	private int UserID;
 	private String Name;
 
-	public EUser(String UserID, String Name) {
+	public EUser(int UserID, String Name) {
 		this.UserID = UserID;
 		this.Name = Name;
 	}
-
-	abstract void makeOrder();
-	abstract void getOrder();
 }
