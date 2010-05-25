@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  *
- * @author Soren V. Jorgensen
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 public class MAPCONTROL {
 

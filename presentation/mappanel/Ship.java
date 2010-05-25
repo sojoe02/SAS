@@ -11,11 +11,16 @@ import java.util.Random;
 
 /**
  *
- * @author Soren V Jorgensen
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
+ *
+ * This class draw the ship in accordance it's given coordinates.
+ * Also it will be able to register mouse button press near it, setting the
+ * boolean show flag that will determine wether the coordinates should be drawn
+ * or not.
  */
 public class Ship {
 
-    //Pixel values for shipposition.
+    //Pixel values for shipposition H=height, W=width.
     private int H;
     private int W;
     //Ship drawing pixelsize.
@@ -23,30 +28,31 @@ public class Ship {
     //coodinate precision.
     private int cP = 6;
     private Font font;
-    //Gps index
-    private int gpsNr;
     private Color c;
     private boolean show;
+    private int shipID;
 
-    public Ship(int colorcode, int gpsNr) {
-	//setting initial pixelvalues for the ship position	
-	this.gpsNr = gpsNr;
+    //route strings
+    
+
+    public Ship(int shipID, Color c) {
+	//setting initial pixelvalues for the ship position
+
+	this.shipID = shipID;
+	
 	H = 50;
 	W = 50;
 	//Define the font.
-	font = new Font("SansSerif", Font.BOLD, 10);
+	font = new Font("SansSerif", Font.BOLD, 12);
 	
 	SIZE = 8;
 
 	Random r = new Random();
 	//set random shipcolour.
-	c = new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256));
+	this.c = c;
     }
 
-    /*private void updatePosition(double lon, double lat) {
-    longditude = lon;
-    latitude = lat;
-    }*/
+    
     public void draw(Graphics g) {
 	//shift color for rendering of the ship!
 	g.setColor(c);
@@ -63,7 +69,7 @@ public class Ship {
     public void drawCoor(Graphics g ,int pWidth, int pHeight) {
 	//Set the subsequent colour:
 	if (show == true) {
-	    g.setColor(Color.black);
+	    g.setColor(Color.white);
 	    g.setFont(font);
 	    //first the shift testing and pixel compensation.
 	    int Ws = W, Hs = H;
@@ -74,9 +80,9 @@ public class Ship {
 		Hs = H + 15;
 	    }
 
-	    //second decimal control as to not spam the screen with text.
-	    String sLon = Double.toString(MAPCONTROL.longditude.get(gpsNr));
-	    String sLat = Double.toString(MAPCONTROL.latitude.get(gpsNr));
+	    	    //second decimal control as to not spam the screen with text.
+	    String sLon = Double.toString(MapPanelEntity.LATITUDE.get(shipID));
+	    String sLat = Double.toString(MapPanelEntity.LONGDITUDE.get(shipID));
 
 	    if (sLon.length() > cP && sLat.length() > cP) {
 
@@ -98,6 +104,15 @@ public class Ship {
 	//----------------------------------------------------------------
     }
 
+    
+    public void drawRoute(){
+	if(show == true){
+	    
+	}
+	
+    }
+
+
     public void move(int H, int W) {
 	//update position of the ship
 	this.H = H;
@@ -110,6 +125,10 @@ public class Ship {
 
     public boolean getShow(){
 	return show;
+    }
+
+    public int getShipID(){
+	return shipID;
     }
 
 

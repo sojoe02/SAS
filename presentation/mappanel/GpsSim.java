@@ -10,7 +10,7 @@ import java.util.Random;
 
 /**
  *
- * @author Soren V. Jorgensen
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 public class GpsSim implements Runnable {
 
