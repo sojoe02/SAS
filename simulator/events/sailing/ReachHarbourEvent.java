@@ -8,7 +8,7 @@ import java.util.Observable;
 
 /**
  *
- * @author Zagadka
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 public class ReachHarbourEvent extends Observable {
 

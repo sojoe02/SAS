@@ -11,7 +11,8 @@ import java.util.Random;
 
 /**
  *
- * @author Soren V Jorgensen
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
+ *
  * This class draw the ship in accordance it's given coordinates.
  * Also it will be able to register mouse button press near it, setting the
  * boolean show flag that will determine wether the coordinates should be drawn

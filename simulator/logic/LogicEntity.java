@@ -7,11 +7,11 @@ package simulator.logic;
 import simulator.logic.ship.ShipMoveLogic;
 import java.util.ArrayList;
 import simulator.logic.stat.*;
-import simulator.Coordinates;
+import utility.Coordinates;
 
 /**
  *
- * @author Grp2
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  *
  * This class is the handler of the logic layer, events will use this to
  * access relevant methods from logic. This class is singleton.

@@ -7,11 +7,11 @@ package simulator.events.sailing;
 import java.util.Observable;
 import java.util.Observer;
 import presentation.mappanel.MapPanelEntity;
-import simulator.Coordinates;
+import utility.Coordinates;
 
 /**
  *
- * @author Zagadka
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 public class ShipStartEvent implements Observer {
     /*this class will start the ship moving it from one harbour to another,

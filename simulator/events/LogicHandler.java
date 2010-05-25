@@ -7,7 +7,7 @@ package simulator.events;
 
 /**
  *
- * @author japper
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 public class LogicHandler {
 

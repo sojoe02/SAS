@@ -17,7 +17,8 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author Soren V. Jorgensen.
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
+ *
  */
 public class ShowMap extends JComponent implements ActionListener, MouseListener, MouseMotionListener {
 

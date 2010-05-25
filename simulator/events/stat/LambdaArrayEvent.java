@@ -11,7 +11,7 @@ import simulator.logic.LogicEntity;
 
 /**
  *
- * @author Zagadka
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 public class LambdaArrayEvent {
 

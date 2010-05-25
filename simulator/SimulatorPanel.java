@@ -20,7 +20,7 @@ import javax.swing.JTextArea;
 
 /**
  *
- * @author Zagadka
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 public class SimulatorPanel extends JPanel implements Observer {
 
@@ -117,10 +117,6 @@ public class SimulatorPanel extends JPanel implements Observer {
 	tList.addActionListener(new chooseTListener());
 	tList.setSelectedIndex(2);
 
-	/*t_estList = new JComboBox(integers);
-	t_estList.addActionListener(new chooseT_estListener());
-	t_estList.setSelectedIndex(2);*/
-
 	LList = new JComboBox(integers);
 	LList.addActionListener(new chooseLListener());
 	LList.setSelectedIndex(2);
@@ -153,15 +149,11 @@ public class SimulatorPanel extends JPanel implements Observer {
 	buttonstatPanel.add(new JLabel(" Traffik periode(t):"));
 	buttonstatPanel.add(tList);
 
-
-
-
 	buttonstatPanel.add(makeTraffic);
 
 	buttonstatPanel.add(new JLabel(" Estimer antal skibe(k):"));
-	buttonstatPanel.add(kList);
-	buttonstatPanel.add(new JLabel(" PoissonPeriode(t):"));
-//	buttonstatPanel.add(t_estList);
+	buttonstatPanel.add(kList);	
+
 	buttonstatPanel.add(poisson);
 
 	add(buttonstatPanel);

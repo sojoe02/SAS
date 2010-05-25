@@ -9,7 +9,7 @@ import simulator.data.DataEntity;
 
 /**
  *
- * @author Zagadka
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 // private static LogicEntity logic = new LogicEntity();
 public class SimulatorEntity {

@@ -4,11 +4,11 @@
  */
 package simulator.logic.ship;
 
-import simulator.Coordinates;
+import utility.Coordinates;
 
 /**
  *
- * @author 
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 public class ShipMoveLogic {
 

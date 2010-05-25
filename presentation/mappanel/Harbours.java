@@ -19,7 +19,7 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author Soren V Jorgensen
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  * This class can read harbours from a .txt DB, again there havent been time
  * to implement a 'real' DB. And draw their names on the harbours position on
  * the map.

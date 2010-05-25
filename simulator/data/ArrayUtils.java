@@ -7,7 +7,7 @@ package simulator.data;
 
 /**
  *
- * @author Zagadka
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 class ArrayUtils {
 

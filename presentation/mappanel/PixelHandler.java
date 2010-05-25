@@ -6,7 +6,7 @@ package presentation.mappanel;
 
 /**
  *
- * @author Soren V Jorgensen
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  *
  * This class will handle everything in regards to pixel and longditude/latitude
  * conversion.

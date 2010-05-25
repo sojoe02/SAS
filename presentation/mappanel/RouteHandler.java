@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Soren V Jorgensen
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  * This class wil take the routes from a DB in this case a simple .txt as there
  * was no time for anything else, and draw a route if the map is zoomed in
  * (to prevent cluttering the mainmap).

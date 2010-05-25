@@ -9,7 +9,7 @@ import simulator.logic.LogicEntity;
 
 /**
  *
- * @author japper
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  * This class will make traffic using a lambda array and
  */
 public class MakeTrafficEvent {

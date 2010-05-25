@@ -14,7 +14,7 @@ import javax.swing.JComponent;
 
 /**
  *
- * @author Zagadka
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  * This one will take handle the showMap panel, and add new ships as
  * gpsCoordinates are comming ind. This like all other entities in the
  * presentation layers is a singleton.

@@ -15,7 +15,7 @@ import simulator.events.stat.MakeTrafficEvent;
 
 /**
  *
- * @author Zagadka
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 public class EventsEntity {
 

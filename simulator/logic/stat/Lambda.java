@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author Zagadka
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 public class Lambda {
 

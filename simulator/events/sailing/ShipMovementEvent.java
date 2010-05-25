@@ -6,13 +6,13 @@ package simulator.events.sailing;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import simulator.Coordinates;
+import utility.Coordinates;
 import presentation.mappanel.MapPanelEntity;
 import simulator.logic.LogicEntity;
 
 /**
  *
- * @author Zagadka
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 public class ShipMovementEvent implements Runnable {
 

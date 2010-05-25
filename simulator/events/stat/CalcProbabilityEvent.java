@@ -9,7 +9,7 @@ import simulator.logic.LogicEntity;
 
 /**
  *
- * @author grp2.
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  */
 public class CalcProbabilityEvent {
 

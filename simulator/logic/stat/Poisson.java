@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 /**
  *
- * @author japper
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
  * This class will deal with the poisson process using the lambda class and
  * the RandomDistro class.
  */

@@ -12,7 +12,8 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author Soren V. Jorgensen.
+ * @author Mats Larsen, Stefan Skytthe, Dan Vi, Søren Jørgensen
+ * 
  * this class will load the appropriate map whenever a zoom command
  * is issued from whereever.
  */
