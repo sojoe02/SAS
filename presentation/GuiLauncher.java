@@ -16,6 +16,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import presentation.mappanel.MapPanelEntity;
 import simulator.SimulatorPanel;
 import simulator.events.sailing.ReachHarbourEvent;
 
@@ -70,7 +71,7 @@ public class GuiLauncher extends JFrame {
 	// Show the converter.
 	tabbed.addTab("Simulatorpanel", shipicon, simpanel, "Simulator");
 	//add the map to a tab.
-	tabbed.addTab("Kort", mapicon, new ShowMap(), "Kort til visning af skibspositioner");
+	tabbed.addTab("Kort", mapicon, MapPanelEntity.getInstance().showMap(), "Kort til visning af skibspositioner");
 
 	SASframe.update(null);
 	SASframe.pack();
