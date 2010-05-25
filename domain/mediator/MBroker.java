@@ -86,6 +86,7 @@ public class MBroker implements IAContants{
 		+" WHERE d1.harbour='"+ startDest +"' AND d1.eventType='Departure'"
 		+" AND d2.harbour='"+ endDest +"' AND d2.eventType='Arrival'"
 		+" AND d1.shipID=d2.shipID"
+		+" AND d1.schedulingID < d2.schedulingID"
 		+" ORDER BY startDate"
 		+";"
 	;
@@ -118,6 +119,7 @@ public class MBroker implements IAContants{
 //WHERE		d1.harbour='Odense' And d1.eventType='Departure'
 //AND 		d2.harbour='Amsterdam' And d2.eventType='Arrival'
 //AND 		d1.shipID=d2.shipID
+//AND			d1.schedulingID < d2.schedulingID
 //ORDER BY 	startDate
     }
 
