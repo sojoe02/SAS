@@ -13,8 +13,6 @@ public class EOrder {
     private String content;
     private ArrayList<EContainer> containers = new ArrayList<EContainer>();
 
-
-
     public EOrder(int orderID, EScheduling startScheduling, EScheduling endScheduling, EShip ship, String content, ArrayList<Integer> container) {
 	this.orderID = orderID;
 	this.startScheduling = startScheduling;
@@ -22,7 +20,6 @@ public class EOrder {
 	this.ship = ship;
 	this.content = content;
 
-//try {
 	if (container != null) {
 	    for(int i = 0; i < container.size(); i++) {
 		System.out.println(container.get(i));
@@ -31,13 +28,5 @@ public class EOrder {
 		containers.add(con);
 	    }
 	}
-//}catch(java.lang.NullPointerException e){
-//    e.getMessage();
-//}
-
-
     }
 }
-
-    
-
