@@ -2,6 +2,7 @@ package domain.entity;
 
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ public class EShip {
     private String Captain;
     private ECargo cargo;
     private LinkedList<EScheduling> schedulings = new LinkedList<EScheduling>();
+    private Map<Integer, EScheduling> completedSchedulings = new HashMap<Integer, EScheduling>();
 
     public EShip(int ShipID, String Name, String Captain, int maxContainers, ArrayList<String[]> containers, ArrayList<String[]> scheduling, Map<String, EHarbour> harbours) {
         this.ShipID = ShipID;	//TODO tilføj auto
