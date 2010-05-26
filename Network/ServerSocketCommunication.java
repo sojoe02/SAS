@@ -17,7 +17,8 @@ public class ServerSocketCommunication {
 
     private ServerSocket server;
     private final int port = 7777;
-    CActioner cactioner;
+    private CActioner cactioner;
+    private SendObject sObject;
 
     public ServerSocketCommunication() throws Exception {
 	try {
@@ -75,7 +76,8 @@ public class ServerSocketCommunication {
 
 		try {
 		    // Kalder over i kontrolklassen med sObject som parameter
-		    sObject = cactioner.chooseMetode(sObject);
+
+		    sObject = chooseMetode(sObject);
 		} catch (Exception e) {
 		    e.getMessage();
 		}
@@ -95,4 +97,31 @@ public class ServerSocketCommunication {
 	    }
 	}
     }
+        /* Denne metode finder ud af hvilken metode som er blevet kaldt fra klienten.
+    Hvor den returnerer et sObject som skal sendes til klienten som respons.
+     * Der betnyttes synchronized for programmet er multitrådet.
+     */
+        public synchronized SendObject chooseMetode(SendObject rObject) throws Exception {
+	try {
+	    // Testes om login metoden er blevet kaldt.
+	    if (rObject.getMetodeChoose().equals("login")) {
+	   sObject = cactioner.login(rObject);
+	   return sObject;
+	    }
+	    	    // Testes om findShipDates metoden er blevet kaldt.
+	    if (rObject.getMetodeChoose().equals("findShipDates")) {
+		sObject = cactioner.findShipDates(rObject);
+		return sObject;
+	    }
+	    // Testes om placeOrder metoden er blevet kaldt.
+	    if (rObject.getMetodeChoose().equals("placeOrder")) {
+		cactioner.placeOrder(rObject);
+	    }
+
+
+	} catch (java.lang.NullPointerException e) {
+	    e.getMessage();
+	}
+	 return null;
+	}
 }

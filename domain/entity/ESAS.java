@@ -10,9 +10,7 @@ public class ESAS {
 	private Map<String, EHarbour> harbours = new HashMap<String, EHarbour>();
 
 	public ESAS() {
-		//TODO
 	}
-
 	// Konstruktorer for skib, havn og bruger
 	public void createShip(int ShipID, String Name, String Captain, int maxContainers, ArrayList<String[]> containers, ArrayList<String[]> scheduling) {
 	    EShip ship = new EShip(ShipID, Name, Captain, maxContainers, containers, scheduling, harbours);
@@ -23,9 +21,6 @@ public class ESAS {
 	    return ships.get(shipID);
 	}
 	public void createUser(int userID, String name, String company, String adress, String userType, ArrayList orders) {
-	    //TODO slet
-	    System.out.println("USERtype:  " + userType);
-
 	    if(userType.equals("admin")) {
 		EUser user = new EShippingCompany(userID, name);
 		users.put(userID, user);

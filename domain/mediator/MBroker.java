@@ -50,7 +50,6 @@ public class MBroker implements IAContants{
 	    return null;
 	}
 
-	//TODO
 	String sqlStmt =
 		    " SELECT userID,adminAccess,simulatorAccess"
 		    + " FROM accessControl ac1"
@@ -86,6 +85,7 @@ public class MBroker implements IAContants{
 		+" WHERE d1.harbour='"+ startDest +"' AND d1.eventType='Departure'"
 		+" AND d2.harbour='"+ endDest +"' AND d2.eventType='Arrival'"
 		+" AND d1.shipID=d2.shipID"
+		+" AND d1.schedulingID < d2.schedulingID"
 		+" ORDER BY startDate"
 		+";"
 	;
@@ -118,6 +118,7 @@ public class MBroker implements IAContants{
 //WHERE		d1.harbour='Odense' And d1.eventType='Departure'
 //AND 		d2.harbour='Amsterdam' And d2.eventType='Arrival'
 //AND 		d1.shipID=d2.shipID
+//AND			d1.schedulingID < d2.schedulingID
 //ORDER BY 	startDate
     }
 
@@ -182,16 +183,7 @@ public class MBroker implements IAContants{
 		    rsHarbours.getString("coordinate"),
 		    rsHarbours.getString("nationality"));
 	}
-	
-	System.out.println("-----------------------");
-	System.out.println("TEST:  havne objekter");
-	System.out.println(sas.getHarbour("Odense"));
-	System.out.println(sas.getHarbour("Sydney"));
-	System.out.println("-----------------------");
-	System.out.println("-----------------------");
 
-
-	
 	//oprettelse af skibe
 	sqlStmt = "SELECT * FROM ship;";
 
@@ -238,15 +230,6 @@ public class MBroker implements IAContants{
 	    containers.clear();
 	    schedulings.clear();
 	}
-
-	//TODO skal slettes
-	System.out.println("-----------------------");
-	System.out.println("TEST:  ship objekter");
-	System.out.println(sas.getShip(1));
-	System.out.println(sas.getShip(3));
-	System.out.println("-----------------------");
-	System.out.println("-----------------------");
-
 
 	//oprettelse af users
 	sqlStmt = "SELECT * FROM users;";

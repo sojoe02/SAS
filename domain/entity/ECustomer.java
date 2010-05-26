@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- * @author skytthe
- */
+
 public class ECustomer extends EUser {
 
 	private String Company;
@@ -22,9 +19,6 @@ public class ECustomer extends EUser {
 	    this.Company = Company;
 	    this.Adress = Adress;
 
-	    //TODO slet
-	    System.out.println("\t" + UserID + " - " + Name + " - " + Company + " - " + Adress);
-
 	    //oprettelse af ordre
 	    for(int i = 0; i < orders.size(); i++) {
 		Object[] orderInstans = (Object[]) orders.get(i);
@@ -35,19 +29,14 @@ public class ECustomer extends EUser {
 			ships.get(Integer.parseInt((String) orderInstans[6])),
 			(String) orderInstans[4],(ArrayList<Integer>)orderInstans[7]
 			);	
-		
-	//	EOrder order = null;
-//TODO slet System.out.println("");
+
 		if(orderInstans[5].equals("waiting")) {
-		    System.out.println("wait");
 		    waitingOrders.put((String) orderInstans[0], order);
 		}
 		if(orderInstans[5].equals("Active")) {
-		    System.out.println("active");
 		    activeOrders.put((String) orderInstans[0], order);
 		}
 		if(orderInstans[5].equals("Complete")) {
-		    System.out.println("complete");
 		    completeOrders.put((String) orderInstans[0], order);
 		}
 	    }

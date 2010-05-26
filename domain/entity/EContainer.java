@@ -13,8 +13,6 @@ public class EContainer {
 	    this.ContainerID = ContainerID;
 	    this.Content = content;
 
-	    //TODO slet
-	    System.out.println("\t \t" + ContainerID + " - " + content + " - " + this);
 	}
 	
 }

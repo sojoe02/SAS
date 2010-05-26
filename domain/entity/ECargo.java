@@ -17,9 +17,6 @@ public class ECargo {
     public ECargo(int maxContainers, ArrayList<String[]> containers) {
 	this.maxContainers = maxContainers;
 
-	//TODO SLET
-	System.out.println("\t" + this);
-
 	for(int i = 0; i < containers.size(); i++) {
 	    String[] containerInstans = containers.get(i);
 	    EContainer con = new EContainer(Integer.parseInt(containerInstans[0]), containerInstans[1]);
