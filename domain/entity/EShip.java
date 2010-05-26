@@ -16,15 +16,10 @@ public class EShip {
     private Map<Integer, EScheduling> completedSchedulings = new HashMap<Integer, EScheduling>();
 
     public EShip(int ShipID, String Name, String Captain, int maxContainers, ArrayList<String[]> containers, ArrayList<String[]> scheduling, Map<String, EHarbour> harbours) {
-        this.ShipID = ShipID;	//TODO tilføj auto
+        this.ShipID = ShipID;
         this.Name = Name;
         this.Captain = Captain;
 
-	//TODO slet
-	System.out.println("skib: " + ShipID + " - " + Name);
-	System.out.println(this);
-
-	System.out.println(harbours.get("Odense"));
 	cargo = new ECargo(maxContainers, containers);
 
 	for(int i = 0; i < scheduling.size(); i++) {
@@ -34,9 +29,6 @@ public class EShip {
 		    Integer.parseInt(schedulingArrayInstans[4]),harbours.get(schedulingArrayInstans[3]) );
 	    schedulings.add(schedulingInstans);
 	}
-
-	//TODO slet
-	System.out.println("-----------------------");
     }
 
     public EScheduling getScheduling(int schedulingID) {

@@ -20,7 +20,6 @@ public class EOrder {
 	this.ship = ship;
 	this.content = content;
 
-
 	if (container.size() != 0) {
 	    for(int i = 0; i < container.size(); i++) {
 		System.out.println(container.get(i));
@@ -29,10 +28,5 @@ public class EOrder {
 		containers.add(con);
 	    }
 	}
-
-	//TODO slet
-//	System.out.println("\t \t" + orderID + " - " + content + " - " + ship +" - "+ startScheduling.getSchedulingID()+" - "+ endScheduling.getSchedulingID() + " - " + containers);
     }
-
-
 }

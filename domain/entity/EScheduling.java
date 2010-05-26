@@ -19,8 +19,6 @@ public class EScheduling {
 	this.eventDate = eventDate;
 	this.currentContainers = currentContainers;
 	this.harbour = harbour;
-
-	System.out.println("\t" + this + " - " + schedulingID + " - " + harbour + " - " + eventType);
     }
 
 
